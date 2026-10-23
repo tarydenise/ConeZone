@@ -95,9 +95,9 @@ docs/              spec, plans, this file
 
 - [X] Create the `bakeoff-1` branch from `main` and confirm the spec is in `docs/`
 - [X] Create the SvelteKit project in the repo (or a subfolder) and run it locally
-- [ ] Create the Neon or Supabase database and add the connection string to a local `.env` (never commit it)
-- [ ] Add `.env` to `.gitignore` and add a `.env.example` with placeholder names
-- [ ] Write `AGENTS.md` (Section 5)
+- [X] Create the Neon or Supabase database and add the connection string to a local `.env` (never commit it)
+- [X] Add `.env` to `.gitignore` and add a `.env.example` with placeholder names
+- [X] Write `AGENTS.md` (Section 5)
 - [ ] Add setup steps to the README (install, environment variables, run, seed)
 - [ ] Commit and push
 
