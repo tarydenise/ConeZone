@@ -1,4 +1,4 @@
-# 3.3 — Job Assignments and Staffing Status
+# F7 — Job Assignments, Staffing Status, and My Jobs
 
 > Implementation plan. Source: ConeZone Project Specification §3.3 (Job Assignments), with related rules from §3.2, §3.6, and §9.
 
@@ -6,15 +6,15 @@
 
 | Field | Value |
 |---|---|
-| **Feature ID** | 3.3 |
+| **Feature ID** | F7 |
 | **Section** | Jobs and Crew (MVP core) |
 | **Severity** | BLOCKER |
 | **Markets** | N/A. One traffic control company, one time zone, English only. |
 | **Status (today)** | MISSING |
 | **Estimated effort** | S (1w) |
 | **Owner (proposed)** | TBD once teams are formed |
-| **Depends on** | 3.1 Authentication and Profiles, 3.2 Job Board (CRUD) |
-| **Unblocks** | 3.4 Messaging (thread membership), 3.5 Check-In / Check-Out, 4.4 Conflict Warning (additional feature) |
+| **Depends on** | F2, F3, F4, F6 |
+| **Unblocks** | F8, F9, F10, and the conflict warning (additional feature) |
 
 ---
 
@@ -32,8 +32,8 @@ Jobs can be created, but there is no way to say who is working them. Dispatchers
 
 ## 3. Non-Goals
 
-- Warning about overlapping jobs when assigning a worker (additional feature 4.4).
-- Notifications when someone is assigned, moved, or removed (additional feature 4.2).
+- Warning about overlapping jobs when assigning a worker (additional feature: conflict warning).
+- Notifications when someone is assigned, moved, or removed (additional feature: notifications).
 - A drag-and-drop crew board or calendar assignment.
 - Workers declining, requesting swaps, or signing themselves up for jobs.
 - Assigning Dispatchers or Admins to jobs.
@@ -115,8 +115,8 @@ Jobs can be created, but there is no way to say who is working them. Dispatchers
 | job | reference to Job | required; assignments are deleted when the job is deleted |
 | user | reference to User | required |
 | is_job_supervisor | boolean | default false |
-| checked_in_at | datetime | nullable; used by feature 3.5, included now so the table does not change later |
-| checked_out_at | datetime | nullable; used by feature 3.5 |
+| checked_in_at | datetime | nullable; used by F10, included now so the table does not change later |
+| checked_out_at | datetime | nullable; used by F10 |
 | created_at / updated_at | datetime | |
 
 - **Constraints:** (job, user) must be unique. At most one assignment per job may have is_job_supervisor = true.
@@ -137,7 +137,7 @@ All routes require a logged-in user. Paths are illustrative and may change durin
 | DELETE | `/api/assignments/:id` | Remove a user from a job | Dispatcher, Admin |
 | GET | `/api/jobs/mine` | The current user's upcoming jobs | Any logged-in user |
 
-**Changed route:** `GET /api/jobs` and `GET /api/jobs/:id` also return `staffed_count`.
+**Changed routes:** `GET /api/jobs` and `GET /api/jobs/:id` also return `staffed_count`. The crew list in this plan does not include check-in times; F10 adds them for the roles allowed to see them.
 
 **Request and response shapes (pseudo-TypeScript)**
 
@@ -172,7 +172,7 @@ Assignment = { id, job_id, user_id, is_job_supervisor }
 
 - **Job Detail, Crew panel (modified):** shows "Crew (N of M)", each member with role, the job supervisor labeled, a Remove button, and + Assign for Dispatchers and Admins.
 - **Assign dialog (new):** search box, list of eligible users with checkboxes, a "make supervisor" choice limited to users with the Supervisor role, Cancel and Save.
-- **Job Board (modified):** the Staff column shows "N / M" and the status chip.
+- **Job Board (F8 owns the page):** this feature supplies the staffed count "N / M" that F8 displays.
 - **My Jobs (new, mobile first):** Today and Upcoming sections with job cards.
 
 **Key flows**
@@ -203,16 +203,16 @@ N/A. This feature does not use AI or machine learning.
 
 - **External services:** none.
 - **Internal modules:**
-  - Auth and role checks (features 3.1 and 3.6): used to restrict who can assign.
-  - Job CRUD (feature 3.2): editing workers needed and deleting a job must trigger the staffing rules in FR-10, FR-11, and FR-14.
-  - Messaging (3.4) and Check-In (3.5): read assignments to decide who can post and check in. They do not change assignments.
+  - Auth and role checks (F1, F2): used to restrict who can assign. The user list from F3 feeds the Assign dialog.
+  - Job CRUD (F6): editing workers needed and deleting a job must trigger the staffing rules in FR-10, FR-11, and FR-14.
+  - Messaging (F9) and Check-In (F10): read assignments to decide who can post and check in. They do not change assignments.
 - **File paths:** N/A until the technology stack is chosen.
 - **Webhooks and events:** none.
 
 ## 13. Dependencies & Sequencing
 
-- Must ship after: 3.1 Authentication and Profiles, 3.2 Job Board (CRUD).
-- Must ship before: 3.4 Messaging, 3.5 Check-In / Check-Out.
+- Must ship after: F2, F3, F4, F6.
+- Must ship before: F8, F9, F10.
 - Shared infrastructure needed: the database only.
 
 ## 14. Risks & Mitigations
@@ -243,6 +243,27 @@ N/A. This feature does not use AI or machine learning.
 - **Performance:** load the Job Board and My Jobs with 500 jobs and 50 users and confirm the 500 ms target.
 - **Manual exploratory:** two browsers assigning to the same job at once; deactivating an assigned user; resizing to phone width.
 
+| AC | Test case | Level |
+|---|---|---|
+| AC-1 | Assign one worker to a job needing 2; expect "1 of 2" and status Open | Integration |
+| AC-2 | Assign a second worker; expect "2 of 2" and status Staffed | Integration |
+| AC-3 | Remove one worker from a Staffed job; expect "1 of 2" and status Open | Integration |
+| AC-4 | Assign a third user to a full job; expect 409 and unchanged crew | Integration |
+| AC-5 | Assign the same user twice; expect 409 and unchanged count | Integration |
+| AC-6 | Flag a second Supervisor; expect only the new one flagged | Integration |
+| AC-7 | Flag a Field Worker as job supervisor; expect 400 | Integration |
+| AC-8 | As Field Worker assigned to Job A, list My Jobs and request Job B's crew; expect only Job A, then 404 | Security |
+| AC-9 | As Field Worker call assign and remove routes; expect 403 | Integration |
+| AC-10 | Add and remove assignments on Completed and Cancelled jobs; expect 409 each | Integration |
+| AC-11 | Lower workers needed below assigned count; expect rejection with message | Integration |
+| AC-12 | Raise workers needed on a Staffed job; expect status Open and "2 of 3" | Integration |
+| AC-13 | Delete a job with assignments; expect assignments gone and absent from My Jobs | Integration |
+| AC-14 | Open My Jobs with no assignments; expect empty message | E2E |
+| AC-15 | Fix clock 1:00 AM on an overnight job; load My Jobs; expect the job listed | Unit |
+| AC-16 | Change a job supervisor's role to Field Worker; expect still on crew with flag cleared | Integration |
+| AC-17 | Assign to an In Progress job; expect status unchanged and count updated | Integration |
+| AC-18 | Deactivate an assigned user; load crew list; expect "(inactive)" and still counted | Integration |
+
 ## 17. Documentation & Training
 
 - **End-user docs:** a short "Assigning a crew" guide for Dispatchers and a "Finding my jobs" note for field workers.
@@ -260,7 +281,7 @@ N/A. This feature does not use AI or machine learning.
 
 ## 19. References
 
-- ConeZone Project Specification: §3.2 Job Board, §3.3 Job Assignments, §3.6 Role-Based Access Control, §9 Edge Cases and Clarified Rules, §7 API Endpoints.
+- ConeZone Project Specification: §3.2 Job Board, §3.3 Job Assignments (this plan), §3.6 Role-Based Access Control, §9 Edge Cases and Clarified Rules, §7 API Endpoints.
 - ConeZone Wireframes: Job Detail, My Jobs, and the Assign dialog.
-- Related plans: 3.2 Job Board (CRUD), 3.4 Messaging, 3.5 Check-In / Check-Out (not written yet).
+- Related plans: F2 (role and membership checks), F3 (user list and role changes), F4 (shell), F6 (job CRUD), F8 (job board), F9 (messages), F10 (check-in).
 - Existing code paths: N/A until the stack is chosen.
