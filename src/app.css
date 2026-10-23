@@ -1,0 +1,7 @@
+body { margin: 0; font-family: Helvetica, Arial, sans-serif; color: #1f1f1f; background: #f2f2ef; }
+.auth-card { max-width: 380px; margin: 48px auto; padding: 32px; background: #fff; border: 1.5px solid #b8b8b8; border-radius: 6px; display: flex; flex-direction: column; gap: 16px; }
+.auth-card label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; }
+.auth-card input { height: 40px; padding: 0 12px; border: 1.5px solid #b8b8b8; border-radius: 6px; font: inherit; font-size: 14px; }
+.auth-card button { height: 44px; border: 0; border-radius: 6px; background: #1f1f1f; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+.auth-card button:disabled { opacity: 0.6; }
+.error { color: #a40000; font-size: 13px; margin: 0; }
