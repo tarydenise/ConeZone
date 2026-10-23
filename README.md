@@ -30,6 +30,20 @@ Permissions are enforced in the interface and on the server.
 | View check-in log           | No           | Own jobs               | Yes        | Yes     |
 | Manage users and roles      | No           | No                     | No         | Yes     |
 
+
+
+### How permissions are enforced
+
+All rules live in one file, `src/lib/server/permissions.js`. Pages and form actions check them with the helpers in `src/lib/server/guards.js`. The user's role is read from the database on every request, never from the browser, so a role change takes effect on the user's next request. Deactivated users are treated as logged out.
+
+| Response                   | Meaning                                                               |
+| -------------------------- | --------------------------------------------------------------------- |
+| 401 (or redirect to Login) | You are not logged in                                                 |
+| 403 Access denied          | You are logged in, but your role cannot do this action                |
+| 404 Not found              | The job is not one you are assigned to (so job ids cannot be guessed) |
+
+To protect a new page or action, add one line to `permissions.js` and call `requireAction(event, 'action.name')` at the top of its `load` function or form action.
+
 ## Setup and Installation
 
 1. Install Node 20 or higher.

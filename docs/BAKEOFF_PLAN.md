@@ -115,11 +115,11 @@ docs/              spec, plans, this file
 
 **Day 3: F2 Role enforcement**
 
-- [ ] Create the permissions file (role to allowed actions)
-- [ ] Create `requireRole` and `requireJobMember` helpers used by every protected page and form action
-- [ ] Attach the stored role to every request in the hook
-- [ ] Build the access denied page
-- [ ] Check F2 acceptance criteria (a Field Worker cannot reach the New Job page or its action)
+- [X] Create the permissions file (role to allowed actions)
+- [X] Create `requireRole` and `requireJobMember` helpers used by every protected page and form action
+- [X] Attach the stored role to every request in the hook
+- [X] Build the access denied page
+- [X] Check F2 acceptance criteria (a Field Worker cannot reach the New Job page or its action)
 
 **Days 4 to 5: F4 App shell**
 
