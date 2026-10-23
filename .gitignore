@@ -1,0 +1,16 @@
+# Dependencies and build output (stack-agnostic starting point; extend once the stack is chosen)
+node_modules/
+dist/
+build/
+.venv/
+__pycache__/
+
+# Secrets and local config: never commit these
+.env
+.env.*
+*.pem
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea/
