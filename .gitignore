@@ -1,16 +1,23 @@
-# Dependencies and build output (stack-agnostic starting point; extend once the stack is chosen)
-node_modules/
-dist/
-build/
-.venv/
-__pycache__/
+node_modules
 
-# Secrets and local config: never commit these
-.env
-.env.*
-*.pem
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
 
-# Editor and OS files
+# OS
 .DS_Store
 Thumbs.db
-.idea/
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
