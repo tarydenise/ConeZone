@@ -111,7 +111,7 @@ docs/              spec, plans, this file
 - [X] Add log out
 - [X] Read the session in `hooks.server.js` and redirect logged-out visitors to Login
 - [X] Write `scripts/seed.js` to create one user per role
-- [ ] Check F1 acceptance criteria AC-1 to AC-11 by hand; write Vitest tests for the password and email rules
+- [X] Check F1 acceptance criteria AC-1 to AC-11 by hand; write Vitest tests for the password and email rules
 
 **Day 3: F2 Role enforcement**
 
