@@ -110,7 +110,7 @@ docs/              spec, plans, this file
 - [X] Build Sign Up and Log In pages with validation errors (form actions)
 - [X] Add log out
 - [X] Read the session in `hooks.server.js` and redirect logged-out visitors to Login
-- [ ] Write `scripts/seed.js` to create one user per role
+- [X] Write `scripts/seed.js` to create one user per role
 - [ ] Check F1 acceptance criteria AC-1 to AC-11 by hand; write Vitest tests for the password and email rules
 
 **Day 3: F2 Role enforcement**

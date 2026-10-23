@@ -37,6 +37,19 @@ Permissions are enforced in the interface and on the server.
 3. Copy `.env.example` to `.env` and add your database connection string.
 4. Run `npm run dev` and open http://localhost:5173.
 
+### Seed data
+
+With the server running ('npm run dev'), run this in a second terminal: `npm run seed`
+
+This creates one test user per role. All use the password 'Password123!':
+
+| Role         | Email                    |
+| ------------ | ------------------------ |
+| Admin        | admin@conezone.test      |
+| Dispatcher   | dispatcher@conezone.test |
+| Supervisor   | supervisor@conezone.test |
+| Field Worker | worker@conezone.test     |
+
 ## API Documentation
 
 _To be completed during development. Start from the endpoint list in the specification (Section 7)._
