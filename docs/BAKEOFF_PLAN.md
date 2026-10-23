@@ -16,16 +16,16 @@ There are two goals, in this order:
 
 ## 2. Technology Stack
 
-| Piece | Choice | Notes |
-|---|---|---|
-| Meta framework | **SvelteKit** (Svelte 5, runes syntax) | File-based routing, server-side rendering, form actions, hooks |
-| Language | JavaScript | TypeScript is optional later |
-| Database | **PostgreSQL**, hosted on Neon or Supabase (database only) | One shared database for the team |
-| Data access | **Drizzle ORM** | Schema written from the Data Model sections of the plans |
-| Authentication | **Better Auth** (email and password) | Roles stored on the user |
-| Styling | Plain CSS in Svelte scoped styles | Mobile first. No UI library. |
-| Testing | Vitest (logic), Playwright (a few end-to-end checks) | Prototype level only |
-| Deployment | Node adapter, hosted later on Render, Railway, or Fly.io | Not required to start |
+| Piece          | Choice                                                           | Notes                                                          |
+| -------------- | ---------------------------------------------------------------- | -------------------------------------------------------------- |
+| Meta framework | **SvelteKit** (Svelte 5, runes syntax)                     | File-based routing, server-side rendering, form actions, hooks |
+| Language       | JavaScript                                                       | TypeScript is optional later                                   |
+| Database       | **PostgreSQL**, hosted on Neon or Supabase (database only) | One shared database for the team                               |
+| Data access    | **Drizzle ORM**                                            | Schema written from the Data Model sections of the plans       |
+| Authentication | **Better Auth** (email and password)                       | Roles stored on the user                                       |
+| Styling        | Plain CSS in Svelte scoped styles                                | Mobile first. No UI library.                                   |
+| Testing        | Vitest (logic), Playwright (a few end-to-end checks)             | Prototype level only                                           |
+| Deployment     | Node adapter, hosted later on Render, Railway, or Fly.io         | Not required to start                                          |
 
 **Rule:** do not add other dependencies without writing down why in this file. AI tools like to add libraries we do not need.
 
@@ -33,19 +33,21 @@ There are two goals, in this order:
 
 ### In scope (core features, using the existing plans)
 
-| Feature | Plan | Prototype version |
-|---|---|---|
-| F1 Auth basics | [F1](plans/F1-auth-basics.md) | Sign up, log in, log out, current user, protected pages |
-| F2 Role enforcement | [F2](plans/F2-rbac-enforcement.md) | One permissions file, a role check on every route, access denied page |
-| F4 App shell and responsive layout | [F4](plans/F4-app-shell-responsive-nav.md) | Shared layout, role-based navigation, loading, empty, and error displays |
-| F6 Job CRUD and status | [F6](plans/F6-job-crud.md) | Create, list, view, edit, cancel, and delete jobs; status rules; overnight times |
-| F7 Assignments and My Jobs | [F7](plans/F7-job-assignments-staffing.md) | Assign and remove workers, staffed count, automatic Open/Staffed status, My Jobs for workers |
+| Feature                            | Plan                                      | Prototype version                                                                            |
+| ---------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------- |
+| F1 Auth basics                     | [F1](plans/F1-auth-basics.md)              | Sign up, log in, log out, current user, protected pages                                      |
+| F2 Role enforcement                | [F2](plans/F2-rbac-enforcement.md)         | One permissions file, a role check on every route, access denied page                        |
+| F4 App shell and responsive layout | [F4](plans/F4-app-shell-responsive-nav.md) | Shared layout, role-based navigation, loading, empty, and error displays                     |
+| F6 Job CRUD and status             | [F6](plans/F6-job-crud.md)                 | Create, list, view, edit, cancel, and delete jobs; status rules; overnight times             |
+| F7 Assignments and My Jobs         | [F7](plans/F7-job-assignments-staffing.md) | Assign and remove workers, staffed count, automatic Open/Staffed status, My Jobs for workers |
 
 ### Simplified for the prototype
+
 - **F3 Admin user management:** skipped as a screen. A **seed script** creates one user per role (Admin, Dispatcher, Supervisor, Field Worker). Role change through the UI is a stretch task.
 - **F6 list:** a plain list sorted by date. Search and filters (F8) are not included.
 
 ### Out of scope for this bakeoff
+
 Messaging (F9), check-in (F10), announcements (F11), profile editing (F5), search and filters (F8), real-time updates, notifications, offline support, and anything in the additional features list. The plans for these already exist and will be used in a later bakeoff or phase.
 
 ## 4. Learning Goals (SvelteKit)
@@ -90,7 +92,8 @@ docs/              spec, plans, this file
 ## 6. Task List (Two Weeks)
 
 ### Day 0: Setup
-- [ ] Create the `bakeoff-1` branch from `main` and confirm the spec is in `docs/`
+
+- [X] Create the `bakeoff-1` branch from `main` and confirm the spec is in `docs/`
 - [ ] Create the SvelteKit project in the repo (or a subfolder) and run it locally
 - [ ] Create the Neon or Supabase database and add the connection string to a local `.env` (never commit it)
 - [ ] Add `.env` to `.gitignore` and add a `.env.example` with placeholder names
@@ -101,6 +104,7 @@ docs/              spec, plans, this file
 ### Week 1: Foundations
 
 **Days 1 to 2: F1 Auth**
+
 - [ ] Add Drizzle and write the User table (fields from F1 Data Model)
 - [ ] Add Better Auth with email and password; store the role on the user (default Field Worker)
 - [ ] Build Sign Up and Log In pages with validation errors (form actions)
@@ -110,6 +114,7 @@ docs/              spec, plans, this file
 - [ ] Check F1 acceptance criteria AC-1 to AC-11 by hand; write Vitest tests for the password and email rules
 
 **Day 3: F2 Role enforcement**
+
 - [ ] Create the permissions file (role to allowed actions)
 - [ ] Create `requireRole` and `requireJobMember` helpers used by every protected page and form action
 - [ ] Attach the stored role to every request in the hook
@@ -117,6 +122,7 @@ docs/              spec, plans, this file
 - [ ] Check F2 acceptance criteria (a Field Worker cannot reach the New Job page or its action)
 
 **Days 4 to 5: F4 App shell**
+
 - [ ] Build the shared layout: header with name, role, and Log out
 - [ ] Role-based navigation (top bar on desktop, bottom tabs for workers on phones, menu button for Dispatcher and Admin on phones)
 - [ ] Build shared Loading, Empty, and Error components
@@ -127,6 +133,7 @@ docs/              spec, plans, this file
 ### Week 2: Core Features
 
 **Days 6 to 8: F6 Jobs**
+
 - [ ] Write the Job table (fields from F6 Data Model) and add sample jobs to the seed script
 - [ ] Write the shared time helper (overnight jobs end the next day) with Vitest tests
 - [ ] Job list page (all jobs for Dispatcher and Admin, sorted by date and start time)
@@ -137,6 +144,7 @@ docs/              spec, plans, this file
 - [ ] Check F6 acceptance criteria AC-1 to AC-12
 
 **Days 9 to 10: F7 Assignments and My Jobs**
+
 - [ ] Write the Assignment table (fields from F7 Data Model)
 - [ ] Assign dialog: pick users, enforce open spots and no duplicates
 - [ ] Crew list on the job detail page with remove
@@ -146,11 +154,13 @@ docs/              spec, plans, this file
 - [ ] Check the main F7 acceptance criteria (AC-1 to AC-9, AC-14)
 
 **Days 11 to 12: Stretch and cleanup (only if on schedule)**
+
 - [ ] Role change screen for Admin (small slice of F3)
 - [ ] Mark Supervisor as the job supervisor
 - [ ] Better error messages and empty states
 
 **Days 13 to 14: Finish**
+
 - [ ] Fix bugs found while running the demo script (Section 8)
 - [ ] Add a few Playwright checks for login and job creation
 - [ ] Complete the README (description, team, setup, API documentation, known issues)
@@ -184,26 +194,26 @@ The prototype is done when this works on a phone-size window and a desktop windo
 
 Fill this in as we go so the report is easy to write at the end.
 
-| Measure | Notes |
-|---|---|
-| Time to a working login | |
-| Time to job create, edit, and list | |
-| Number of dependencies installed | |
-| Lines of code (rough) | |
-| Dev server start time | |
-| Learning curve: what was easy | |
-| Learning curve: what was confusing | |
-| How well AI generated SvelteKit code (fixes needed) | |
-| Would I use this stack again for ConeZone? Why? | |
+| Measure                                             | Notes |
+| --------------------------------------------------- | ----- |
+| Time to a working login                             |       |
+| Time to job create, edit, and list                  |       |
+| Number of dependencies installed                    |       |
+| Lines of code (rough)                               |       |
+| Dev server start time                               |       |
+| Learning curve: what was easy                       |       |
+| Learning curve: what was confusing                  |       |
+| How well AI generated SvelteKit code (fixes needed) |       |
+| Would I use this stack again for ConeZone? Why?     |       |
 
 **AI log (add a line per task):** task, what I asked, what worked, what I fixed.
 
 ## 10. Risks
 
-| Risk | Mitigation |
-|---|---|
-| AI writes old Svelte syntax or adds extra libraries | `AGENTS.md` rules; review every diff |
-| Auth setup takes longer than expected | Follow Better Auth's SvelteKit guide exactly; do not customize until login works |
-| Database setup problems block the team | Shared hosted database; `.env.example`; seed script |
-| Too much scope | Core features only; cut list in Section 7 |
-| Overnight and time logic bugs | One shared time helper with tests |
+| Risk                                                | Mitigation                                                                       |
+| --------------------------------------------------- | -------------------------------------------------------------------------------- |
+| AI writes old Svelte syntax or adds extra libraries | `AGENTS.md` rules; review every diff                                           |
+| Auth setup takes longer than expected               | Follow Better Auth's SvelteKit guide exactly; do not customize until login works |
+| Database setup problems block the team              | Shared hosted database; `.env.example`; seed script                            |
+| Too much scope                                      | Core features only; cut list in Section 7                                        |
+| Overnight and time logic bugs                       | One shared time helper with tests                                                |
