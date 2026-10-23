@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+  let { data } = $props();
+</script>
+
+<main class="auth-card">
+  <h1>Welcome, {data.user.name}</h1>
+  <p>Your role: {data.user.role}</p>
+  <form method="POST" action="/logout"><button>Log out</button></form>
+</main>
