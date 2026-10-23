@@ -134,10 +134,10 @@ docs/              spec, plans, this file
 
 **Days 6 to 8: F6 Jobs**
 
-- [ ] Write the Job table (fields from F6 Data Model) and add sample jobs to the seed script
-- [ ] Write the shared time helper (overnight jobs end the next day) with Vitest tests
-- [ ] Job list page (all jobs for Dispatcher and Admin, sorted by date and start time)
-- [ ] New job and Edit job forms with server-side validation
+- [X] Write the Job table (fields from F6 Data Model) and add sample jobs to the seed script
+- [X] Write the shared time helper (overnight jobs end the next day) with Vitest tests
+- [X] Job list page (all jobs for Dispatcher and Admin, sorted by date and start time)
+- [X] New job and Edit job forms with server-side validation
 - [ ] Job detail page
 - [ ] Status changes with the transition rules (Cancel, In Progress, Completed)
 - [ ] Delete with a confirmation

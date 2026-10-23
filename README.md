@@ -30,8 +30,6 @@ Permissions are enforced in the interface and on the server.
 | View check-in log           | No           | Own jobs               | Yes        | Yes     |
 | Manage users and roles      | No           | No                     | No         | Yes     |
 
-
-
 ### How permissions are enforced
 
 All rules live in one file, `src/lib/server/permissions.js`. Pages and form actions check them with the helpers in `src/lib/server/guards.js`. The user's role is read from the database on every request, never from the browser, so a role change takes effect on the user's next request. Deactivated users are treated as logged out.
@@ -70,7 +68,7 @@ _To be completed during development. Start from the endpoint list in the specifi
 
 ## Known Issues and Future Improvements
 
-- _None yet._
+* Menu focus trap: the plan calls for the phone meny to trap keyboard focus. I left it out to keep this prototype simple.
 
 ## Feature Plans
 

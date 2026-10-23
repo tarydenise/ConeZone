@@ -17,3 +17,7 @@ body { margin: 0; font-family: Helvetica, Arial, sans-serif; color: #1f1f1f; bac
 .auth-card button { height: 44px; border: 0; border-radius: 6px; background: #1f1f1f; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
 .auth-card button:disabled { opacity: 0.6; }
 .error { color: #a40000; font-size: 13px; margin: 0; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border: 1.5px solid var(--ink); border-radius: 6px; background: var(--ink); color: #fff; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn.secondary { background: #fff; color: var(--ink); border-color: var(--line); }
+.btn:disabled { opacity: 0.6; }
