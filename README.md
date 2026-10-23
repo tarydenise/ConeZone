@@ -32,7 +32,10 @@ Permissions are enforced in the interface and on the server.
 
 ## Setup and Installation
 
-_To be completed once the technology stack is chosen after the Bakeoffs._
+1. Install Node 20 or higher.
+2. Run `npm install`.
+3. Copy `.env.example` to `.env` and add your database connection string.
+4. Run `npm run dev` and open http://localhost:5173.
 
 ## API Documentation
 

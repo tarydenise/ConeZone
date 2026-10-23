@@ -98,8 +98,8 @@ docs/              spec, plans, this file
 - [X] Create the Neon or Supabase database and add the connection string to a local `.env` (never commit it)
 - [X] Add `.env` to `.gitignore` and add a `.env.example` with placeholder names
 - [X] Write `AGENTS.md` (Section 5)
-- [ ] Add setup steps to the README (install, environment variables, run, seed)
-- [ ] Commit and push
+- [X] Add setup steps to the README (install, environment variables, run, seed)
+- [X] Commit and push
 
 ### Week 1: Foundations
 
