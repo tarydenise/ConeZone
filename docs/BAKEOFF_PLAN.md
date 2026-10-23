@@ -105,11 +105,11 @@ docs/              spec, plans, this file
 
 **Days 1 to 2: F1 Auth**
 
-- [ ] Add Drizzle and write the User table (fields from F1 Data Model)
-- [ ] Add Better Auth with email and password; store the role on the user (default Field Worker)
+- [X] Add Drizzle and write the User table (fields from F1 Data Model)
+- [X] Add Better Auth with email and password; store the role on the user (default Field Worker)
 - [ ] Build Sign Up and Log In pages with validation errors (form actions)
 - [ ] Add log out
-- [ ] Read the session in `hooks.server.js` and redirect logged-out visitors to Login
+- [X] Read the session in `hooks.server.js` and redirect logged-out visitors to Login
 - [ ] Write `scripts/seed.js` to create one user per role
 - [ ] Check F1 acceptance criteria AC-1 to AC-11 by hand; write Vitest tests for the password and email rules
 
