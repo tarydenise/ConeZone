@@ -31,11 +31,11 @@ There are existing tools (scheduling software, group chat apps, field service pl
 
 The primary customer is a small to mid-size traffic control company (roughly 10 to 100 employees). Users fall into four roles, and what they can see and do depends on their role.
 
-| Role | Who they are | What they need |
-| --- | --- | --- |
-| **Admin** | Office manager or owner | Manage user accounts, assign roles, see everything, archive old data |
-| **Dispatcher** | Office-based scheduler | Create and edit jobs, assign crews, send announcements, monitor job status |
-| **Supervisor** | Lead on site, runs a crew | See assigned jobs, update job status, message their crew, review who has checked in |
+| Role                   | Who they are                          | What they need                                                                         |
+| ---------------------- | ------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Admin**        | Office manager or owner               | Manage user accounts, assign roles, see everything, archive old data                   |
+| **Dispatcher**   | Office-based scheduler                | Create and edit jobs, assign crews, send announcements, monitor job status             |
+| **Supervisor**   | Lead on site, runs a crew             | See assigned jobs, update job status, message their crew, review who has checked in    |
 | **Field Worker** | Flagger or traffic control technician | See *their* upcoming jobs, view details and notes, check in/out, message about a job |
 
 ### Example user stories
@@ -87,17 +87,17 @@ The MVP is the smallest version of the app that is actually useful. Everything h
 
 Permissions are enforced both in what the interface shows *and* in what the server will allow. See the permissions table below.
 
-| Action | Field Worker | Supervisor | Dispatcher | Admin |
-| --- | --- | --- | --- | --- |
-| View own assigned jobs | Yes | Yes | Yes | Yes |
-| View all jobs | No | No | Yes | Yes |
-| Create / edit / delete jobs | No | Status only (own jobs) | Yes | Yes |
-| Assign workers to jobs | No | No | Yes | Yes |
-| Post in a job thread | Own jobs | Own jobs | Any job | Any job |
-| Post announcements | No | No | Yes | Yes |
-| Check in / out | Own jobs | Own jobs | No | No |
-| View check-in log | No | Own jobs | Yes | Yes |
-| Manage users and roles | No | No | No | Yes |
+| Action                      | Field Worker | Supervisor             | Dispatcher | Admin   |
+| --------------------------- | ------------ | ---------------------- | ---------- | ------- |
+| View own assigned jobs      | Yes          | Yes                    | Yes        | Yes     |
+| View all jobs               | No           | No                     | Yes        | Yes     |
+| Create / edit / delete jobs | No           | Status only (own jobs) | Yes        | Yes     |
+| Assign workers to jobs      | No           | No                     | Yes        | Yes     |
+| Post in a job thread        | Own jobs     | Own jobs               | Any job    | Any job |
+| Post announcements          | No           | No                     | Yes        | Yes     |
+| Check in / out              | Own jobs     | Own jobs               | No         | No      |
+| View check-in log           | No           | Own jobs               | Yes        | Yes     |
+| Manage users and roles      | No           | No                     | No         | Yes     |
 
 ### 3.7 Responsive Design
 
@@ -256,58 +256,58 @@ Field types are described generically. Teams will choose how to store them. Ever
 
 ### User
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| name | text | required |
-| email | text | required, unique |
-| password | text | stored securely, never plain text |
-| phone | text | optional |
-| certifications | text | free text |
-| role | enum | `admin`, `dispatcher`, `supervisor`, `field_worker` (default `field_worker`) |
-| is\_active | boolean | deactivate instead of deleting |
+| Field          | Type    | Notes                                                                                  |
+| -------------- | ------- | -------------------------------------------------------------------------------------- |
+| name           | text    | required                                                                               |
+| email          | text    | required, unique                                                                       |
+| password       | text    | stored securely, never plain text                                                      |
+| phone          | text    | optional                                                                               |
+| certifications | text    | free text                                                                              |
+| role           | enum    | `admin`, `dispatcher`, `supervisor`, `field_worker` (default `field_worker`) |
+| is\_active     | boolean | deactivate instead of deleting                                                         |
 
 ### Job
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| title | text | required |
-| client\_name | text |  |
-| address | text | required |
-| date | date | required |
-| start\_time / end\_time | time | required |
-| workers\_needed | integer | default 1 |
-| notes | text |  |
-| status | enum | `open`, `staffed`, `in_progress`, `completed`, `cancelled` |
-| created\_by | reference to User | the dispatcher/admin |
+| Field                   | Type              | Notes                                                                |
+| ----------------------- | ----------------- | -------------------------------------------------------------------- |
+| title                   | text              | required                                                             |
+| client\_name            | text              |                                                                      |
+| address                 | text              | required                                                             |
+| date                    | date              | required                                                             |
+| start\_time / end\_time | time              | required                                                             |
+| workers\_needed         | integer           | default 1                                                            |
+| notes                   | text              |                                                                      |
+| status                  | enum              | `open`, `staffed`, `in_progress`, `completed`, `cancelled` |
+| created\_by             | reference to User | the dispatcher/admin                                                 |
 
 ### Assignment (connects Users and Jobs, many-to-many)
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| job | reference to Job |  |
-| user | reference to User |  |
-| is\_job\_supervisor | boolean | at most one per job |
-| checked\_in\_at | datetime | nullable |
-| checked\_out\_at | datetime | nullable |
+| Field               | Type              | Notes               |
+| ------------------- | ----------------- | ------------------- |
+| job                 | reference to Job  |                     |
+| user                | reference to User |                     |
+| is\_job\_supervisor | boolean           | at most one per job |
+| checked\_in\_at     | datetime          | nullable            |
+| checked\_out\_at    | datetime          | nullable            |
 
 ### Message
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| job | reference to Job | nullable; empty means company-wide announcement |
-| author | reference to User |  |
-| body | text | required |
-| is\_announcement | boolean |  |
-| edited\_at | datetime | nullable |
+| Field            | Type              | Notes                                           |
+| ---------------- | ----------------- | ----------------------------------------------- |
+| job              | reference to Job  | nullable; empty means company-wide announcement |
+| author           | reference to User |                                                 |
+| body             | text              | required                                        |
+| is\_announcement | boolean           |                                                 |
+| edited\_at       | datetime          | nullable                                        |
 
 ### Notification *(additional feature)*
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| user | reference to User | recipient |
-| type | text | e.g., `assigned`, `job_changed`, `new_message` |
-| job | reference to Job | optional |
-| is\_read | boolean |  |
+| Field    | Type              | Notes                                                |
+| -------- | ----------------- | ---------------------------------------------------- |
+| user     | reference to User | recipient                                            |
+| type     | text              | e.g., `assigned`, `job_changed`, `new_message` |
+| job      | reference to Job  | optional                                             |
+| is\_read | boolean           |                                                      |
 
 ### Relationships
 
@@ -323,60 +323,60 @@ All endpoints except sign up and log in require an authenticated user. "Roles" l
 
 ### Auth and Users
 
-| Method | Path | Purpose | Roles |
-| --- | --- | --- | --- |
-| POST | `/api/auth/register` | Create account | Public |
-| POST | `/api/auth/login` | Log in | Public |
-| POST | `/api/auth/logout` | Log out | Any |
-| GET | `/api/users/me` | Get my profile | Any |
-| PUT | `/api/users/me` | Update my profile | Any |
-| PUT | `/api/users/me/password` | Change password | Any |
-| GET | `/api/users` | List users (supports `?role=` and `?search=`) | Dispatcher, Admin |
-| PUT | `/api/users/:id/role` | Change a user's role | Admin |
-| PUT | `/api/users/:id/active` | Activate / deactivate user | Admin |
+| Method | Path                       | Purpose                                           | Roles             |
+| ------ | -------------------------- | ------------------------------------------------- | ----------------- |
+| POST   | `/api/auth/register`     | Create account                                    | Public            |
+| POST   | `/api/auth/login`        | Log in                                            | Public            |
+| POST   | `/api/auth/logout`       | Log out                                           | Any               |
+| GET    | `/api/users/me`          | Get my profile                                    | Any               |
+| PUT    | `/api/users/me`          | Update my profile                                 | Any               |
+| PUT    | `/api/users/me/password` | Change password                                   | Any               |
+| GET    | `/api/users`             | List users (supports `?role=` and `?search=`) | Dispatcher, Admin |
+| PUT    | `/api/users/:id/role`    | Change a user's role                              | Admin             |
+| PUT    | `/api/users/:id/active`  | Activate / deactivate user                        | Admin             |
 
 ### Jobs
 
-| Method | Path | Purpose | Roles |
-| --- | --- | --- | --- |
-| GET | `/api/jobs` | List jobs (`?date=`, `?status=`, `?search=`); workers and supervisors get only their own | Any (filtered by role) |
-| GET | `/api/jobs/:id` | Job detail with crew | Assigned users, Dispatcher, Admin |
-| POST | `/api/jobs` | Create job | Dispatcher, Admin |
-| PUT | `/api/jobs/:id` | Edit job | Dispatcher, Admin |
-| PATCH | `/api/jobs/:id/status` | Change status only | Supervisor (own jobs), Dispatcher, Admin |
-| DELETE | `/api/jobs/:id` | Delete job | Dispatcher, Admin |
-| GET | `/api/jobs/mine` | My upcoming jobs | Any |
+| Method | Path                     | Purpose                                                                                        | Roles                                    |
+| ------ | ------------------------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| GET    | `/api/jobs`            | List jobs (`?date=`, `?status=`, `?search=`); workers and supervisors get only their own | Any (filtered by role)                   |
+| GET    | `/api/jobs/:id`        | Job detail with crew                                                                           | Assigned users, Dispatcher, Admin        |
+| POST   | `/api/jobs`            | Create job                                                                                     | Dispatcher, Admin                        |
+| PUT    | `/api/jobs/:id`        | Edit job                                                                                       | Dispatcher, Admin                        |
+| PATCH  | `/api/jobs/:id/status` | Change status only                                                                             | Supervisor (own jobs), Dispatcher, Admin |
+| DELETE | `/api/jobs/:id`        | Delete job                                                                                     | Dispatcher, Admin                        |
+| GET    | `/api/jobs/mine`       | My upcoming jobs                                                                               | Any                                      |
 
 ### Assignments and Check-In
 
-| Method | Path | Purpose | Roles |
-| --- | --- | --- | --- |
-| GET | `/api/jobs/:id/assignments` | List crew on a job | Assigned users, Dispatcher, Admin |
-| POST | `/api/jobs/:id/assignments` | Assign a user | Dispatcher, Admin |
-| PUT | `/api/assignments/:id` | Change supervisor flag | Dispatcher, Admin |
-| DELETE | `/api/assignments/:id` | Remove a user from a job | Dispatcher, Admin |
-| POST | `/api/jobs/:id/check-in` | Check in (current user) | Assigned worker/supervisor |
-| POST | `/api/jobs/:id/check-out` | Check out (current user) | Assigned worker/supervisor |
+| Method | Path                          | Purpose                  | Roles                             |
+| ------ | ----------------------------- | ------------------------ | --------------------------------- |
+| GET    | `/api/jobs/:id/assignments` | List crew on a job       | Assigned users, Dispatcher, Admin |
+| POST   | `/api/jobs/:id/assignments` | Assign a user            | Dispatcher, Admin                 |
+| PUT    | `/api/assignments/:id`      | Change supervisor flag   | Dispatcher, Admin                 |
+| DELETE | `/api/assignments/:id`      | Remove a user from a job | Dispatcher, Admin                 |
+| POST   | `/api/jobs/:id/check-in`    | Check in (current user)  | Assigned worker/supervisor        |
+| POST   | `/api/jobs/:id/check-out`   | Check out (current user) | Assigned worker/supervisor        |
 
 ### Messages
 
-| Method | Path | Purpose | Roles |
-| --- | --- | --- | --- |
-| GET | `/api/jobs/:id/messages` | Read job thread | Assigned users, Dispatcher, Admin |
-| POST | `/api/jobs/:id/messages` | Post to job thread | Assigned users, Dispatcher, Admin |
-| PUT | `/api/messages/:id` | Edit own message | Author |
-| DELETE | `/api/messages/:id` | Delete message | Author, Admin |
-| GET | `/api/announcements` | List announcements | Any |
-| POST | `/api/announcements` | Post announcement | Dispatcher, Admin |
-| DELETE | `/api/announcements/:id` | Delete announcement | Dispatcher, Admin |
+| Method | Path                       | Purpose             | Roles                             |
+| ------ | -------------------------- | ------------------- | --------------------------------- |
+| GET    | `/api/jobs/:id/messages` | Read job thread     | Assigned users, Dispatcher, Admin |
+| POST   | `/api/jobs/:id/messages` | Post to job thread  | Assigned users, Dispatcher, Admin |
+| PUT    | `/api/messages/:id`      | Edit own message    | Author                            |
+| DELETE | `/api/messages/:id`      | Delete message      | Author, Admin                     |
+| GET    | `/api/announcements`     | List announcements  | Any                               |
+| POST   | `/api/announcements`     | Post announcement   | Dispatcher, Admin                 |
+| DELETE | `/api/announcements/:id` | Delete announcement | Dispatcher, Admin                 |
 
 ### Notifications *(additional feature)*
 
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/api/notifications` | List my notifications |
-| PUT | `/api/notifications/:id/read` | Mark as read |
-| PUT | `/api/notifications/read-all` | Mark all as read |
+| Method | Path                            | Purpose               |
+| ------ | ------------------------------- | --------------------- |
+| GET    | `/api/notifications`          | List my notifications |
+| PUT    | `/api/notifications/:id/read` | Mark as read          |
+| PUT    | `/api/notifications/read-all` | Mark all as read      |
 
 ### Real-Time Events *(additional feature)*
 
@@ -416,13 +416,13 @@ In addition to the endpoints above, the server pushes live events to connected u
 
 ### Empty states
 
-| Screen | When | What the user sees |
-| --- | --- | --- |
-| Job Board | No jobs match the search or filters | "No jobs found" with a Clear filters button; Dispatchers also see + New job |
-| My Jobs | The worker has no assignments | "You have no upcoming jobs. Check back after dispatch assigns you." |
-| Job thread | No messages yet | "No messages yet. Start the conversation." |
-| Announcements | None posted | "No announcements." |
-| Crew list | Nobody assigned | "No one assigned yet" with an Assign button for Dispatchers and Admins |
+| Screen        | When                                | What the user sees                                                          |
+| ------------- | ----------------------------------- | --------------------------------------------------------------------------- |
+| Job Board     | No jobs match the search or filters | "No jobs found" with a Clear filters button; Dispatchers also see + New job |
+| My Jobs       | The worker has no assignments       | "You have no upcoming jobs. Check back after dispatch assigns you."         |
+| Job thread    | No messages yet                     | "No messages yet. Start the conversation."                                  |
+| Announcements | None posted                         | "No announcements."                                                         |
+| Crew list     | Nobody assigned                     | "No one assigned yet" with an Assign button for Dispatchers and Admins      |
 
 ### Errors and permissions
 
@@ -464,20 +464,3 @@ In addition to the endpoints above, the server pushes live events to connected u
 
 - Real-time updates can be tricky. The app should still work correctly, with a manual refresh, if they are not finished.
 - Permissions are easy to get wrong. Each endpoint should be tested with each role.
-
-## 11. README Outline (to be completed during the project)
-
-1. Project description (adapted from Section 1)
-2. Team members and roles
-3. Setup and installation instructions
-4. API documentation (start from Section 7)
-5. User roles and permissions (start from Section 3.6)
-6. Known issues and future improvements
-
-## 12. How I Used AI
-
-I used Claude as a planning partner for this specification. I started with my project idea, a job board and communication app for a traffic control company, along with the Bakeoff requirements, and asked it to draft a full specification scoped for about 10 weeks. Claude did not ask me clarifying questions first, so I gave it the full context up front instead. I then checked the draft against the assignment: I asked whether wireframes were required (they were, so I had Claude build real wireframes instead of text sketches) and whether the 10-week plan was part of the instructions (it was not). After that I compared the spec to the Spec Driven Development activity and had Claude critique it for vague requirements, missing flows, implementation details, and missing edge cases. I used that review to add user flows, empty states and error cases, and clearer business rules, to remove stack-specific wording from the API section, and to cut the sections the assignment never asked for.
-
-### Reflection
-
-Claude did not ask clarifying questions, so the questions that helped most were my own: asking whether wireframes and the weekly plan were actually required showed me what was an assignment requirement and what was extra. The first draft overreached by adding a week-by-week plan, success criteria, a requirements checklist, and a risk section that nobody asked for, along with stretch features like text message alerts and offline support. It also included implementation details in the API section, such as JSON and session tokens, which should wait until the bakeoffs. To make the spec more realistic, I removed the extra sections, narrowed the API wording, and added the user flows and edge cases the draft was missing. I also had to pin down vague rules, like how a job becomes Staffed and what happens to messages when a job is deleted. If I had skipped the review step, the spec would have been longer than it needed to be and would have left out empty states and permission cases that a team would have run into during the build.
