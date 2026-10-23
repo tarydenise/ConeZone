@@ -6,7 +6,9 @@ const users = [
   { name: 'Alex Kim', email: 'admin@conezone.test', role: 'admin' },
   { name: 'Dana Cole', email: 'dispatcher@conezone.test', role: 'dispatcher' },
   { name: 'Sam Ruiz', email: 'supervisor@conezone.test', role: 'supervisor' },
-  { name: 'Jo Tran', email: 'worker@conezone.test', role: 'field_worker' }
+  { name: 'Jo Tran', email: 'worker@conezone.test', role: 'field_worker' },
+  { name: 'Pat Lee', email: 'worker2@conezone.test', role: 'field_worker' },
+  { name: 'Riley Chen', email: 'worker3@conezone.test', role: 'field_worker' }
 ];
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
@@ -45,6 +47,26 @@ if (countRows[0].n === 0) {
     );
   }
   console.log('Sample jobs created');
+}
+
+// Sample crew assignments (only if there are none yet)
+const { rows: assignCount } = await pool.query('SELECT COUNT(*)::int AS n FROM assignment');
+if (assignCount[0].n === 0) {
+  const crew = [
+    ['School zone flagging', 'worker@conezone.test'],
+    ['School zone flagging', 'worker2@conezone.test'],
+    ['Utility trench on Oak Ave', 'worker@conezone.test'],
+    ['Utility trench on Oak Ave', 'supervisor@conezone.test'],
+    ['Main St lane closure', 'worker3@conezone.test']
+  ];
+  for (const [title, email] of crew) {
+    await pool.query(
+      `INSERT INTO assignment (job_id, user_id)
+       SELECT j.id, u.id FROM job j, "user" u WHERE j.title = $1 AND u.email = $2`,
+      [title, email]
+    );
+  }
+  console.log('Sample crew assigned');
 }
 
 await pool.end();

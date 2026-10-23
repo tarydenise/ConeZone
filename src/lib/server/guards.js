@@ -1,5 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
 import { can } from './permissions.js';
+import { and, eq } from 'drizzle-orm';
+import { db } from './db/index.js';
+import { assignment } from './db/schema.js';
 
 /** Must be logged in. Returns the user. */
 export function requireUser(event) {
@@ -20,9 +23,16 @@ export function requireAction(event, action) {
 }
 
 /** Must be a member of this job. Dispatchers and Admins are members of every job. */
-export function requireJobMember(event, jobId) {
+export async function requireJobMember(event, jobId) {
   const user = requireUser(event);
   if (can(user.role, 'job.view_any')) return user;
-  // F7 will check the Assignment table here. Until then, everyone else is not a member.
-  error(404, 'Not found');
+
+  const [row] = await db
+    .select({ id: assignment.id })
+    .from(assignment)
+    .where(and(eq(assignment.jobId, jobId), eq(assignment.userId, user.id)))
+    .limit(1);
+
+  if (!row) error(404, 'Not found'); // not on this job: pretend it does not exist
+  return user;
 }

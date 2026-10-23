@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, serial, integer, date, time } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, boolean, serial, integer, date, time, unique } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -63,3 +63,18 @@ export const job = pgTable('job', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow()
 });
+
+export const assignment = pgTable(
+  'assignment',
+  {
+    id: serial('id').primaryKey(),
+    jobId: integer('job_id').notNull().references(() => job.id, { onDelete: 'cascade' }),
+    userId: text('user_id').notNull().references(() => user.id),
+    isJobSupervisor: boolean('is_job_supervisor').notNull().default(false),
+    checkedInAt: timestamp('checked_in_at'),
+    checkedOutAt: timestamp('checked_out_at'),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow()
+  },
+  (t) => [unique('assignment_job_user').on(t.jobId, t.userId)]
+);

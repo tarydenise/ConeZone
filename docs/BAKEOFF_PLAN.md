@@ -139,18 +139,18 @@ docs/              spec, plans, this file
 - [X] Job list page (all jobs for Dispatcher and Admin, sorted by date and start time)
 - [X] New job and Edit job forms with server-side validation
 - [X] Job detail page
-- [ ] Status changes with the transition rules (Cancel, In Progress, Completed)
-- [ ] Delete with a confirmation
-- [ ] Check F6 acceptance criteria AC-1 to AC-12
+- [X] Status changes with the transition rules (Cancel, In Progress, Completed)
+- [X] Delete with a confirmation
+- [X] Check F6 acceptance criteria AC-1 to AC-12
 
 **Days 9 to 10: F7 Assignments and My Jobs**
 
-- [ ] Write the Assignment table (fields from F7 Data Model)
-- [ ] Assign dialog: pick users, enforce open spots and no duplicates
-- [ ] Crew list on the job detail page with remove
-- [ ] Staffed count and automatic Open/Staffed status
+- [X] Write the Assignment table (fields from F7 Data Model)
+- [X] Assign dialog: pick users, enforce open spots and no duplicates
+- [X] Crew list on the job detail page with remove
+- [X] Staffed count and automatic Open/Staffed status
 - [ ] My Jobs page for Field Worker and Supervisor (only their jobs)
-- [ ] Return not-found for jobs a worker is not assigned to
+- [X] Return not-found for jobs a worker is not assigned to
 - [ ] Check the main F7 acceptance criteria (AC-1 to AC-9, AC-14)
 
 **Days 11 to 12: Stretch and cleanup (only if on schedule)**

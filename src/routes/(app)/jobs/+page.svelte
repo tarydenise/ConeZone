@@ -20,7 +20,7 @@
   <div class="scroll">
     <table>
       <thead>
-        <tr><th>Date</th><th>Time</th><th>Job</th><th>Address</th><th>Workers</th><th>Status</th></tr>
+        <tr><th>Date</th><th>Time</th><th>Job</th><th>Address</th><th>Staffed</th><th>Status</th></tr>
       </thead>
       <tbody>
         {#each data.jobs as job (job.id)}
@@ -35,7 +35,7 @@
               {#if job.clientName}<small>{job.clientName}</small>{/if}
             </td>
             <td>{job.address}</td>
-            <td>{job.workersNeeded}</td>
+            <td>{job.staffed} / {job.workersNeeded}</td>
             <td><span class="badge {job.status}">{STATUS_LABELS[job.status]}</span></td>
           </tr>
         {/each}
