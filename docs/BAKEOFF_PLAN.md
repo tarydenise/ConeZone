@@ -138,7 +138,7 @@ docs/              spec, plans, this file
 - [X] Write the shared time helper (overnight jobs end the next day) with Vitest tests
 - [X] Job list page (all jobs for Dispatcher and Admin, sorted by date and start time)
 - [X] New job and Edit job forms with server-side validation
-- [ ] Job detail page
+- [X] Job detail page
 - [ ] Status changes with the transition rules (Cancel, In Progress, Completed)
 - [ ] Delete with a confirmation
 - [ ] Check F6 acceptance criteria AC-1 to AC-12

@@ -33,6 +33,6 @@ export const actions = {
       .returning({ id: job.id });
 
     console.log(`JOB created id=${created.id} by=${user.id}`);
-    redirect(303, '/jobs'); // Part 2 changes this to the job's detail page
+    redirect(303, `/jobs/${created.id}`);
   }
 };

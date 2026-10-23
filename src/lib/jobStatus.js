@@ -5,3 +5,8 @@ export const STATUS_LABELS = {
   completed: 'Completed',
   cancelled: 'Cancelled'
 };
+
+/** Completed and cancelled jobs are final: no edits, no status changes. */
+export function isFinal(status) {
+  return status === 'completed' || status === 'cancelled';
+}
