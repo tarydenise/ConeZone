@@ -124,131 +124,37 @@ These are low-fidelity sketches. Final layout, colors, and branding are up to th
 
 ### 5.1 Login / Sign Up
 
-```
-+--------------------------------------+
-|              ConeZone                |
-|                                      |
-|   Email     [____________________]   |
-|   Password  [____________________]   |
-|                                      |
-|          [      Log In      ]        |
-|                                      |
-|   No account? Sign up                |
-+--------------------------------------+
-```
+![1792732190627](image/SPEC/1792732190627.png)
 
 ### 5.2 Job Board (Dispatcher, desktop)
 
-```
-+---------------------------------------------------------------+
-| ConeZone   Jobs | Calendar | Announcements | Users   [Dana v]  |
-+---------------------------------------------------------------+
-| Search [__________]  Date [10/23/26]  Status [All v] [+ New Job]|
-+---------------------------------------------------------------+
-| Title                 | Date    | Time        | Staff | Status    |
-|-----------------------|---------|-------------|-------|-----------|
-| Main St Utility Work  | Oct 23  | 7:00-3:30   | 3 / 4 | Open      |
-| I-15 Night Paving     | Oct 23  | 9:00p-5:00a | 6 / 6 | Staffed   |
-| 400 N Water Main      | Oct 24  | 8:00-4:00   | 0 / 2 | Open      |
-| Stadium Event Detour  | Oct 25  | 4:00-11:00p | 4 / 4 | Staffed   |
-+---------------------------------------------------------------+
-```
+![1792732205866](image/SPEC/1792732205866.png)
 
 ### 5.3 Job Detail (Dispatcher / Supervisor)
 
-```
-+---------------------------------------------------------------+
-| < Back to Jobs                          [Edit]  [Cancel Job]   |
-+---------------------------------------------------------------+
-| Main St Utility Work                        Status: [Open v]   |
-| Client: City Water Dept                                        |
-| 123 Main St, Saratoga Springs, UT                              |
-| Oct 23, 7:00 AM - 3:30 PM       Workers needed: 4              |
-| Notes: Lane closure, two-way flagging. Bring 2 STOP/SLOW paddles|
-+------------------------------+--------------------------------+
-| CREW (3 of 4)  [+ Assign]    | MESSAGES                       |
-|  * Sam R. (Supervisor)  IN   |  Sam: Gate code is 4410        |
-|  * Jo T.                IN   |  Jo: Running 10 min late       |
-|  * Lee M.               --   |  Dana: Copy, thanks            |
-|                              |  [Type a message...]  [Send]   |
-+------------------------------+--------------------------------+
-```
+![1792732215928](image/SPEC/1792732215928.png)
 
 ### 5.3a Assign Workers (modal)
 
-```
-+-------------------------------------+
-| Assign to: Main St Utility Work     |
-| Search workers [______________]     |
-|  [ ] Pat K.   Field Worker          |
-|  [x] Lee M.   Field Worker          |
-|  [ ] Ana V.   Supervisor            |
-|  Make supervisor: ( ) Ana V.        |
-|           [Cancel]   [Save]         |
-+-------------------------------------+
-```
+![1792732735404](image/SPEC/1792732735404.png)
 
 ### 5.4 My Jobs (Field Worker, mobile)
 
-```
-+--------------------+
-| My Jobs   [Jo T.]  |
-+--------------------+
-| TODAY              |
-| +----------------+ |
-| | Main St Utility| |
-| | 7:00a - 3:30p  | |
-| | 123 Main St    | |
-| | [  Check In  ] | |
-| +----------------+ |
-| UPCOMING           |
-| +----------------+ |
-| | I-15 Night Pave| |
-| | Oct 25  9:00p  | |
-| +----------------+ |
-+--------------------+
-| Jobs | Msgs | Me   |
-+--------------------+
-```
+![1792732261021](image/SPEC/1792732261021.png)
 
 ### 5.5 Job Thread (mobile)
 
-```
-+--------------------+
-| < Main St Utility  |
-+--------------------+
-| Sam: Gate code 4410|
-| Jo: 10 min late    |
-|        Dana: Copy  |
-|                    |
-| [Message____] [>]  |
-+--------------------+
-```
+![1792732269964](image/SPEC/1792732269964.png)
 
-### 5.6 Announcements and Profile
+### 5.6 Announcements (Dispatcher) and Profile (Field Worker - Mobile)
 
-```
-+---------------------------------+   +--------------------------+
-| Announcements       [+ Post]    |   | Profile                  |
-| Oct 22 - Dana (Dispatch)        |   | Name   [Jo Tran_______]  |
-|  Safety meeting Friday 6:30 AM  |   | Phone  [801-555-0100_]   |
-| Oct 20 - Admin                  |   | Certs  [ATSSA Flagger..] |
-|  New vests available at office  |   | Role: Field Worker       |
-+---------------------------------+   | [Save] [Change password] |
-                                      +--------------------------+
-```
+![1792732879952](image/SPEC/1792732879952.png)
+
+![1792733013835](image/SPEC/1792733013835.png)
 
 ### 5.7 Admin: Manage Users (desktop)
 
-```
-+---------------------------------------------------------+
-| Users                                  [Search_______]  |
-| Name       | Email            | Role          | Active  |
-| Jo Tran    | jo@example.com   | [Field Worker v] | Yes  |
-| Sam Ruiz   | sam@example.com  | [Supervisor v]   | Yes  |
-| Dana Cole  | dana@example.com | [Dispatcher v]   | Yes  |
-+---------------------------------------------------------+
-```
+![1792733415741](image/SPEC/1792733415741.png)
 
 ## 6. Initial Data Models
 
