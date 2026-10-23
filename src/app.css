@@ -1,3 +1,15 @@
+:root {
+--ink: #1f1f1f;
+--line: #b8b8b8;
+--bg: #f2f2ef;
+}
+
+a:focus-visible,
+button:focus-visible {
+outline: 3px solid #1a73e8;
+outline-offset: 2px;
+}
+
 body { margin: 0; font-family: Helvetica, Arial, sans-serif; color: #1f1f1f; background: #f2f2ef; }
 .auth-card { max-width: 380px; margin: 48px auto; padding: 32px; background: #fff; border: 1.5px solid #b8b8b8; border-radius: 6px; display: flex; flex-direction: column; gap: 16px; }
 .auth-card label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; }

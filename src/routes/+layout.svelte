@@ -1,5 +1,6 @@
 <script>
 	import favicon from '#lib/assets/favicon.svg';
+	import '../app.css';
 
 	/** @type {{children: import('svelte').Snippet}} */
 	let { children } = $props();

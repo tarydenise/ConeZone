@@ -123,12 +123,12 @@ docs/              spec, plans, this file
 
 **Days 4 to 5: F4 App shell**
 
-- [ ] Build the shared layout: header with name, role, and Log out
-- [ ] Role-based navigation (top bar on desktop, bottom tabs for workers on phones, menu button for Dispatcher and Admin on phones)
-- [ ] Build shared Loading, Empty, and Error components
-- [ ] Add the not-found page
-- [ ] Check layouts at 375 px and 1280 px
-- [ ] **Week 1 checkpoint:** log in as each seeded role and see the correct navigation. Commit and push.
+- [X] Build the shared layout: header with name, role, and Log out
+- [X] Role-based navigation (top bar on desktop, bottom tabs for workers on phones, menu button for Dispatcher and Admin on phones)
+- [X] Build shared Loading, Empty, and Error components
+- [X] Add the not-found page
+- [X] Check layouts at 375 px and 1280 px
+- [X] **Week 1 checkpoint:** log in as each seeded role and see the correct navigation. Commit and push.
 
 ### Week 2: Core Features
 

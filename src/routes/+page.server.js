@@ -1,3 +1,6 @@
+import { redirect } from '@sveltejs/kit';
+import { homeFor } from '#lib/nav.js';
+
 export function load({ locals }) {
-  return { user: locals.user };
+  redirect(303, locals.user ? homeFor(locals.user.role) : '/login');
 }
