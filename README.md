@@ -4,15 +4,31 @@ A job board and crew communication web app for a traffic control company. Dispat
 
 ## Team Members
 
-| Name | Role / Focus | GitHub |
-|---|---|---|
-| [Your Name] | [e.g. Project lead] | [@username] |
+| Name                 | Role / Focus | GitHub      |
+| -------------------- | ------------ | ----------- |
+| Tary-Denise Tupouata | Lead         | @Tarydenise |
 
 ## Project Description
 
 Traffic control crews coordinate through calls, group texts, and spreadsheets. ConeZone puts jobs, crew assignments, and job conversations in one place, with different access for Admins, Dispatchers, Supervisors, and Field Workers.
 
 See the full specification in [docs/SPEC.md](docs/SPEC.md) (add a copy or link to the spec doc here).
+
+## User Roles and Permissions
+
+Permissions are enforced in the interface and on the server.
+
+| Action                      | Field Worker | Supervisor             | Dispatcher | Admin   |
+| --------------------------- | ------------ | ---------------------- | ---------- | ------- |
+| View own assigned jobs      | Yes          | Yes                    | Yes        | Yes     |
+| View all jobs               | No           | No                     | Yes        | Yes     |
+| Create / edit / delete jobs | No           | Status only (own jobs) | Yes        | Yes     |
+| Assign workers to jobs      | No           | No                     | Yes        | Yes     |
+| Post in a job thread        | Own jobs     | Own jobs               | Any job    | Any job |
+| Post announcements          | No           | No                     | Yes        | Yes     |
+| Check in / out              | Own jobs     | Own jobs               | No         | No      |
+| View check-in log           | No           | Own jobs               | Yes        | Yes     |
+| Manage users and roles      | No           | No                     | No         | Yes     |
 
 ## Setup and Installation
 
@@ -30,8 +46,8 @@ _To be completed during development. Start from the endpoint list in the specifi
 
 Each feature has its own plan in [docs/plans](docs/plans).
 
-| ID | Feature | Status |
-|---|---|---|
+| ID  | Feature                                                                          | Status  |
+| --- | -------------------------------------------------------------------------------- | ------- |
 | 3.3 | [Job Assignments and Staffing Status](docs/plans/3.3-job-assignments-staffing.md) | Planned |
 
 ## Team Workflow
