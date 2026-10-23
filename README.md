@@ -44,6 +44,22 @@ _To be completed during development. Start from the endpoint list in the specifi
 
 ## Feature Plans
 
+The full MVP list is in [docs/feature-inventory.md](docs/feature-inventory.md). Build order and dependencies are in [docs/plans/README.md](docs/plans/README.md).
+
+| ID  | Feature                                                                            | Status  |
+| --- | ---------------------------------------------------------------------------------- | ------- |
+| F1  | [Auth basics](docs/plans/F1-auth-basics.md)                                         | Planned |
+| F2  | [RBAC enforcement](docs/plans/F2-rbac-enforcement.md)                               | Planned |
+| F3  | [Admin user management](docs/plans/F3-admin-user-management.md)                     | Planned |
+| F4  | [App shell and responsive navigation](docs/plans/F4-app-shell-responsive-nav.md)    | Planned |
+| F5  | [Profile management](docs/plans/F5-profile-management.md)                           | Planned |
+| F6  | [Job CRUD and status](docs/plans/F6-job-crud.md)                                    | Planned |
+| F7  | [Job assignments, staffing, and My Jobs](docs/plans/F7-job-assignments-staffing.md) | Planned |
+| F8  | [Job board search and filters](docs/plans/F8-job-board-search-filters.md)           | Planned |
+| F9  | [Job message threads](docs/plans/F9-job-message-threads.md)                         | Planned |
+| F10 | [Check-in and check-out](docs/plans/F10-check-in-out.md)                            | Planned |
+| F11 | [Announcements](docs/plans/F11-announcements.md)                                    | Planned |
+
 Each feature has its own plan in [docs/plans](docs/plans).
 
 | ID  | Feature                                                                          | Status  |
