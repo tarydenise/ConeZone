@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from './db/index.js';
-import { job } from './db/schema.js';
+import { job, assignment } from './db/schema.js';
 
 /** Turn the id in the address into a number, or return Not found. */
 export function parseJobId(raw) {
@@ -15,4 +15,16 @@ export async function getJob(id) {
   const [found] = await db.select().from(job).where(eq(job.id, id));
   if (!found) error(404, 'Not found');
   return found;
+}
+
+/** Is this user flagged as the supervisor of this job? */
+export async function isJobSupervisor(userId, jobId) {
+  const [row] = await db
+    .select({ id: assignment.id })
+    .from(assignment)
+    .where(
+      and(eq(assignment.jobId, jobId), eq(assignment.userId, userId), eq(assignment.isJobSupervisor, true))
+    )
+    .limit(1);
+  return Boolean(row);
 }

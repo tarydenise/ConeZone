@@ -8,7 +8,8 @@ const users = [
   { name: 'Sam Ruiz', email: 'supervisor@conezone.test', role: 'supervisor' },
   { name: 'Jo Tran', email: 'worker@conezone.test', role: 'field_worker' },
   { name: 'Pat Lee', email: 'worker2@conezone.test', role: 'field_worker' },
-  { name: 'Riley Chen', email: 'worker3@conezone.test', role: 'field_worker' }
+  { name: 'Riley Chen', email: 'worker3@conezone.test', role: 'field_worker' },
+  { name: 'Morgan Diaz', email: 'supervisor2@conezone.test', role: 'supervisor' }
 ];
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });

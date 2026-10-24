@@ -4,15 +4,10 @@ import { requireAction, requireJobMember } from '#lib/server/guards.js';
 import { can } from '#lib/server/permissions.js';
 import { db } from '#lib/server/db/index.js';
 import { job, assignment, user as users } from '#lib/server/db/schema.js';
-import { getJob, parseJobId } from '#lib/server/jobs.js';
+import { getJob, parseJobId, isJobSupervisor } from '#lib/server/jobs.js';
 import { syncJobStatus } from '#lib/server/staffing.js';
 import { isFinal, checkStatusChange } from '#lib/jobStatus.js';
 import { checkAssign } from '#lib/staffing.js';
-
-// Until the job supervisor flag is built (stretch task), no supervisor counts as the job's supervisor.
-function isJobSupervisor(user, found) {
-  return false;
-}
 
 export async function load(event) {
   const id = parseJobId(event.params.id);
@@ -52,14 +47,10 @@ export async function load(event) {
       .orderBy(asc(users.name));
   }
 
+  const supervisor = await isJobSupervisor(user.id, id);
   const statusOptions = ['in_progress', 'completed', 'cancelled'].filter(
     (to) =>
-      checkStatusChange({
-        role: user.role,
-        isJobSupervisor: isJobSupervisor(user, found),
-        from: found.status,
-        to
-      }) === 'ok'
+      checkStatusChange({ role: user.role, isJobSupervisor: supervisor, from: found.status, to }) === 'ok'
   );
 
   const office = can(user.role, 'job.view_any');
@@ -90,7 +81,7 @@ export const actions = {
 
     const result = checkStatusChange({
       role: user.role,
-      isJobSupervisor: isJobSupervisor(user, found),
+      isJobSupervisor: await isJobSupervisor(user.id, id),
       from: found.status,
       to
     });
@@ -120,7 +111,6 @@ export const actions = {
     const userIds = [...new Set(data.getAll('userId').map(String))];
     if (userIds.length === 0) return fail(400, { assignError: 'Pick at least one person.' });
 
-    // One transaction: lock the job, check the rules, add people, update the status.
     const problem = await db.transaction(async (tx) => {
       const [j] = await tx.select().from(job).where(eq(job.id, id)).for('update');
       if (!j) return { status: 404 };
@@ -174,6 +164,7 @@ export const actions = {
       if (!j) return { status: 404 };
       if (isFinal(j.status)) return { status: 409, message: 'This job can no longer be changed.' };
 
+      // Deleting the assignment also drops the supervisor flag, since the flag lives on the row.
       const removed = await tx
         .delete(assignment)
         .where(and(eq(assignment.id, assignmentId), eq(assignment.jobId, id)))
@@ -189,5 +180,51 @@ export const actions = {
 
     console.log(`UNASSIGN job=${id} assignment=${assignmentId} by=${user.id}`);
     return { removed: true };
+  },
+
+  setSupervisor: async (event) => {
+    const user = requireAction(event, 'assignment.manage');
+    const id = parseJobId(event.params.id);
+
+    const data = await event.request.formData();
+    const assignmentId = Number(data.get('assignmentId'));
+    const flag = data.get('flag') === 'true';
+    if (!Number.isInteger(assignmentId)) return fail(400, { crewError: 'Choose someone from the crew.' });
+
+    const problem = await db.transaction(async (tx) => {
+      const [j] = await tx.select().from(job).where(eq(job.id, id)).for('update');
+      if (!j) return { status: 404 };
+      if (isFinal(j.status)) return { status: 409, message: 'This job can no longer be changed.' };
+
+      const [row] = await tx
+        .select({ id: assignment.id, role: users.role })
+        .from(assignment)
+        .innerJoin(users, eq(assignment.userId, users.id))
+        .where(and(eq(assignment.id, assignmentId), eq(assignment.jobId, id)));
+      if (!row) return { status: 404 };
+
+      if (flag && row.role !== 'supervisor') {
+        return { status: 400, message: 'Only a Supervisor can be the job supervisor.' };
+      }
+
+      if (flag) {
+        // Only one per job: clear everyone's flag first, then set the new one
+        await tx
+          .update(assignment)
+          .set({ isJobSupervisor: false, updatedAt: new Date() })
+          .where(eq(assignment.jobId, id));
+      }
+      await tx
+        .update(assignment)
+        .set({ isJobSupervisor: flag, updatedAt: new Date() })
+        .where(eq(assignment.id, assignmentId));
+      return null;
+    });
+
+    if (problem?.status === 404) error(404, 'Not found');
+    if (problem) return fail(problem.status, { crewError: problem.message });
+
+    console.log(`SUPERVISOR job=${id} assignment=${assignmentId} flag=${flag} by=${user.id}`);
+    return { supervisorSet: true };
   }
 };

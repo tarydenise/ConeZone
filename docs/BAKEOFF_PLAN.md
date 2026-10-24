@@ -156,7 +156,7 @@ docs/              spec, plans, this file
 **Days 11 to 12: Stretch and cleanup (only if on schedule)**
 
 - [ ] Role change screen for Admin (small slice of F3)
-- [ ] Mark Supervisor as the job supervisor
+- [X] Mark Supervisor as the job supervisor
 - [ ] Better error messages and empty states
 
 **Days 13 to 14: Finish**
