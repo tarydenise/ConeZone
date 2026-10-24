@@ -29,6 +29,19 @@ There are two goals, in this order:
 
 **Rule:** do not add other dependencies without writing down why in this file. AI tools like to add libraries we do not need.
 
+### Dependencies added
+
+| Package                          | Why                                                               |
+| -------------------------------- | ----------------------------------------------------------------- |
+| `better-auth`                  | Email and password login, sessions, password hashing              |
+| `@better-auth/drizzle-adapter` | Connects Better Auth to the Drizzle database                      |
+| `drizzle-orm`                  | Database queries and schema                                       |
+| `pg`                           | PostgreSQL driver (supports the transactions that staffing needs) |
+| `dotenv`                       | Reads `.env` for server code                                    |
+| `drizzle-kit` (dev)            | Creates the tables from the schema                                |
+| `vitest` (dev)                 | Unit tests                                                        |
+| `@playwright/test` (dev)       | A few end-to-end browser checks                                   |
+
 ## 3. Scope
 
 ### In scope (core features, using the existing plans)
@@ -161,9 +174,9 @@ docs/              spec, plans, this file
 
 **Days 13 to 14: Finish**
 
-- [ ] Fix bugs found while running the demo script (Section 8)
-- [ ] Add a few Playwright checks for login and job creation
-- [ ] Complete the README (description, team, setup, API documentation, known issues)
+- [X] Fix bugs found while running the demo script (Section 8)
+- [X] Add a few Playwright checks for login and job creation
+- [X] Complete the README (description, team, setup, API documentation, known issues)
 - [ ] Deploy if time allows (the course may only need the branch link)
 - [ ] Fill in the stack report notes (Section 9)
 - [ ] Final commit, push, and submit
