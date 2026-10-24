@@ -41,6 +41,7 @@ There are two goals, in this order:
 | `drizzle-kit` (dev)            | Creates the tables from the schema                                |
 | `vitest` (dev)                 | Unit tests                                                        |
 | `@playwright/test` (dev)       | A few end-to-end browser checks                                   |
+| @sveltejs/adapter-node (dev)     | Builds the app as a Node server so it can be hosted.              |
 
 ## 3. Scope
 
@@ -178,8 +179,8 @@ docs/              spec, plans, this file
 - [X] Add a few Playwright checks for login and job creation
 - [X] Complete the README (description, team, setup, API documentation, known issues)
 - [ ] Deploy if time allows (the course may only need the branch link)
-- [ ] Fill in the stack report notes (Section 9)
-- [ ] Final commit, push, and submit
+- [X] Fill in the stack report notes (Section 9)
+- [X] Final commit, push, and submit
 
 ## 7. Cut List
 
