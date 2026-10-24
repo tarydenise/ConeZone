@@ -149,9 +149,9 @@ docs/              spec, plans, this file
 - [X] Assign dialog: pick users, enforce open spots and no duplicates
 - [X] Crew list on the job detail page with remove
 - [X] Staffed count and automatic Open/Staffed status
-- [ ] My Jobs page for Field Worker and Supervisor (only their jobs)
+- [X] My Jobs page for Field Worker and Supervisor (only their jobs)
 - [X] Return not-found for jobs a worker is not assigned to
-- [ ] Check the main F7 acceptance criteria (AC-1 to AC-9, AC-14)
+- [X] Check the main F7 acceptance criteria (AC-1 to AC-9, AC-14)
 
 **Days 11 to 12: Stretch and cleanup (only if on schedule)**
 

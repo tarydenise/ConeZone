@@ -35,3 +35,8 @@ export function formatDate(dateStr) {
     weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
   });
 }
+
+/** True once the job's end moment has passed (overnight jobs end on the next day). */
+export function hasEnded(dateStr, start, end, now = new Date()) {
+  return jobWindow(dateStr, start, end).end <= now;
+}
