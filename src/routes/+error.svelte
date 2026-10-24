@@ -15,7 +15,7 @@
     <p>{page.error?.message}</p>
   {:else}
     <h1>Something went wrong</h1>
-    <p>{page.error?.message}</p>
+    <p>Please try again. If it keeps happening, tell an administrator.</p>
   {/if}
   <a href={resolve("/")}>Go back home</a>
 </main>
