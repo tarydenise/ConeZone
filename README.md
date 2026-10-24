@@ -2,6 +2,8 @@
 
 A job board and crew communication web app for a traffic control company. Dispatchers post and staff jobs, supervisors run the site, and field workers see their jobs, check in, and message about them.
 
+Live Demo: [conezone.onrender.com/login](https://conezone.onrender.com/login)
+
 ## Team Members
 
 | Name                 | Role / Focus | GitHub      |
@@ -133,7 +135,7 @@ ConeZone is a SvelteKit app. Pages load data on the server, and changes are sent
 - The job list has no pagination, search, or filters.
 - There is no password reset or email verification.
 - The Playwright checks assume the seed data is loaded.
-- Not deployed. The branch runs locally.
+- The free hosting tier on Render sleeps when idle, so the first load can take about a minute.
 
 ## Feature Plans
 

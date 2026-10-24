@@ -178,7 +178,7 @@ docs/              spec, plans, this file
 - [X] Fix bugs found while running the demo script (Section 8)
 - [X] Add a few Playwright checks for login and job creation
 - [X] Complete the README (description, team, setup, API documentation, known issues)
-- [ ] Deploy if time allows (the course may only need the branch link)
+- [X] Deploy if time allows (the course may only need the branch link)
 - [X] Fill in the stack report notes (Section 9)
 - [X] Final commit, push, and submit
 
@@ -208,19 +208,17 @@ The prototype is done when this works on a phone-size window and a desktop windo
 
 Fill this in as we go so the report is easy to write at the end.
 
-| Measure                                             | Notes |
-| --------------------------------------------------- | ----- |
-| Time to a working login                             |       |
-| Time to job create, edit, and list                  |       |
-| Number of dependencies installed                    |       |
-| Lines of code (rough)                               |       |
-| Dev server start time                               |       |
-| Learning curve: what was easy                       |       |
-| Learning curve: what was confusing                  |       |
-| How well AI generated SvelteKit code (fixes needed) |       |
-| Would I use this stack again for ConeZone? Why?     |       |
-
-**AI log (add a line per task):** task, what I asked, what worked, what I fixed.
+| Measure                                             | Notes  |
+| --------------------------------------------------- | ------ |
+| Time to a working login                             |        |
+| Time to job create, edit, and list                  |        |
+| Number of dependencies installed                    | 15     |
+| Lines of code (rough)                               | 2193   |
+| Dev server start time                               | 832 ms |
+| Learning curve: what was easy                       |        |
+| Learning curve: what was confusing                  |        |
+| How well AI generated SvelteKit code (fixes needed) |        |
+| Would I use this stack again for ConeZone? Why?     |        |
 
 ## 10. Risks
 
