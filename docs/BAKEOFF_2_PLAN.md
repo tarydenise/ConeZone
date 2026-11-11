@@ -147,7 +147,7 @@ docs/              spec, plans, this file
 - [X] Job detail page
 - [X] Status changes with the transition rules (Cancel, In Progress, Completed)
 - [X] Delete with a confirmation
-- [ ] Log my Copilot questions and what I learned
+- [X] Log my Copilot questions and what I learned
 - [X] Check F6 acceptance criteria - AC-7 not in scope (no job supervisor flag); AC-10 crew removal checked in F7
 
 **Days 9 to 10: F7 Assignments and My Jobs**
@@ -161,8 +161,8 @@ docs/              spec, plans, this file
 
 **Days 11 to 14: Finish**
 
-- [ ] Run the demo script (Section 10) and fix bugs
-- [ ] Complete the README (description, setup, known issues)
+- [X] Run the demo script (Section 10) and fix bugs
+- [X] Complete the README (description, setup, known issues)
 - [ ] Deploy to a static host and get the live demo URL
 - [ ] Collect the evaluation form numbers (Section 9)
 - [ ] Fill in the evaluation form and reflection

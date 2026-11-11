@@ -10,7 +10,9 @@ A job board and crew communication web app for a traffic control company. Dispat
 
 ## Project Description
 
-Traffic control crews coordinate through calls, group texts, and spreadsheets. ConeZone puts jobs, crew assignments, and job conversations in one place, with different access for Admins, Dispatchers, Supervisors, and Field Workers.
+ConeZone is a job board and crew app for a traffic control company. Dispatchers post jobs, assign field workers and supervisors, and track each job's status. Workers log in on their phones and see only the jobs they're assigned to.
+
+This branch (`bakeoff-2`) is a prototype built with a **static rendering architecture**. Astro builds every page to plain HTML ahead of time, small Svelte 5 islands handle the interactive parts in the browser, and Supabase provides login and a PostgreSQL database. There is no app server: Row Level Security policies and database functions decide who can see and change what.
 
 See the full specification in [docs/SPEC.md](docs/SPEC.md) (add a copy or link to the spec doc here).
 
@@ -29,6 +31,10 @@ Permissions are enforced in the interface and on the server.
 | Check in / out              | Own jobs     | Own jobs               | No         | No      |
 | View check-in log           | No           | Own jobs               | Yes        | Yes     |
 | Manage users and roles      | No           | No                     | No         | Yes     |
+
+**In this prototype:** only Dispatchers and Admins change a job's status (there is no job supervisor flag yet). Messaging, check-in, and announcements are not built.
+
+**How permissions are enforced:** the database is the security boundary. Every table has Row Level Security, so each user can only read the rows their role allows, and jobs a worker isn't assigned to simply don't come back. Changing a job's status or crew is only possible through database functions that check the user's role first. The interface also hides buttons each role can't use, but that's only for convenience.
 
 ## Setup and Installation
 
@@ -67,11 +73,60 @@ Permissions are enforced in the interface and on the server.
 
 ## API Documentation
 
-_To be completed during development. Start from the endpoint list in the specification (Section 7)._
+ConeZone has no server of its own. The browser talks to Supabase directly with `@supabase/supabase-js`, and the database enforces every rule. The full schema is in `supabase/schema.sql`.
+
+### Pages
+
+| Path                    | Shows                        | Who                                             |
+| ----------------------- | ---------------------------- | ----------------------------------------------- |
+| `/login`, `/signup` | Log in, create account       | Anyone                                          |
+| `/`                   | Sends you to your home page  | Logged in                                       |
+| `/jobs`               | All jobs with staffed counts | Dispatcher, Admin                               |
+| `/jobs/new`           | New job form                 | Dispatcher, Admin                               |
+| `/jobs/view?id=5`     | Job details and crew         | Dispatcher, Admin, or someone on the job's crew |
+| `/jobs/edit?id=5`     | Edit job form                | Dispatcher, Admin                               |
+| `/my-jobs`            | Your upcoming jobs           | Logged in                                       |
+
+### Tables
+
+| Table           | Read                                                                       | Write                                                                                          |
+| --------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `profiles`    | Your own; Dispatchers and Admins see everyone; crew members see each other | Nobody from the app (roles are set in Supabase)                                                |
+| `jobs`        | Dispatchers and Admins see all; crew members see their jobs                | Dispatchers and Admins create, edit details, and delete. `status` can't be written directly. |
+| `assignments` | Dispatchers and Admins see all; crew members see their jobs' crews         | Only through the functions below                                                               |
+
+### Database functions (`supabase.rpc`)
+
+| Function                                 | Purpose                                                           | Who               | Errors                     |
+| ---------------------------------------- | ----------------------------------------------------------------- | ----------------- | -------------------------- |
+| `set_job_status(p_job_id, p_status)`   | Change status to `in_progress`, `completed`, or `cancelled` | Dispatcher, Admin | PT403, PT404, PT409        |
+| `assign_workers(p_job_id, p_user_ids)` | Add workers to a job and update Open/Staffed                      | Dispatcher, Admin | PT400, PT403, PT404, PT409 |
+| `remove_assignment(p_assignment_id)`   | Remove a worker and update Open/Staffed                           | Dispatcher, Admin | PT403, PT404, PT409        |
+
+### Error codes
+
+| Code      | Meaning                                                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------------------------ |
+| `PT400` | Bad input (for example, no one picked, or someone who can't be assigned)                                           |
+| `PT403` | Your role can't do this                                                                                            |
+| `PT404` | Not found                                                                                                          |
+| `PT409` | Not allowed right now: final job, invalid status change, already on the job, fully staffed, or "remove crew first" |
+| `42501` | Direct write blocked by the database's permissions                                                                 |
+| `23514` | A field broke a database rule (length, range, or equal start and end times)                                        |
+
+A job you aren't allowed to see returns no row, so it looks exactly like a job that doesn't exist.
 
 ## Known Issues and Future Improvements
 
-- _None yet._
+- Every protected page shows "Loading..." briefly, because the login check runs in the browser after the static page loads.
+- Times use the browser's time zone and assume everyone is in the company's time zone. Daylight saving changes are ignored.
+- The job supervisor flag and Supervisor status changes are not built, so only Dispatchers and Admins change status.
+- Roles and deactivation are managed in the Supabase dashboard. There is no admin screen.
+- Announcements, Profile, messaging, check-in, and search and filters are planned in the feature plans but not built.
+- There is no password reset, and email confirmation is turned off for the prototype.
+- The job list loads every job at once (no pagination).
+- The phone menu for Dispatchers and Admins does not trap keyboard focus.
+- The edit time (`updated_at`) is set by the browser, not the database.
 
 ## Feature Plans
 
