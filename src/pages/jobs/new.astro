@@ -1,8 +1,8 @@
 ---
 import AppLayout from '../../layouts/AppLayout.astro';
-import PagePlaceholder from '../../components/PagePlaceholder.svelte';
+import NewJob from '../../components/NewJob.svelte';
 ---
 
 <AppLayout title="New job | ConeZone">
-  <PagePlaceholder client:load title="New job" action="job.create" message="F6 builds this form." />
+  <NewJob client:load />
 </AppLayout>
