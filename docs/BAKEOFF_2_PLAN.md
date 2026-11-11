@@ -141,7 +141,7 @@ docs/              spec, plans, this file
 
 - [X] Create the jobs table with constraints and policies
 - [X] Write the shared time helper (overnight jobs end the next day) with Vitest tests
-- [ ] Job list page (Dispatcher and Admin)
+- [X] Job list page (Dispatcher and Admin)
 - [ ] New job and Edit job forms with validation
 - [ ] Job detail page
 - [ ] Status changes with the transition rules (Cancel, In Progress, Completed)
