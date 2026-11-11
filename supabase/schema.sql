@@ -72,3 +72,60 @@ create policy "Office can read all profiles"
   on public.profiles for select
   to authenticated
   using (public.is_office());
+
+-- =========================================================
+-- F6: Jobs
+-- =========================================================
+
+create table public.jobs (
+  id bigint generated always as identity primary key,
+  title text not null check (char_length(btrim(title)) between 1 and 120),
+  client_name text check (char_length(client_name) <= 120),
+  address text not null check (char_length(btrim(address)) between 1 and 200),
+  date date not null,
+  start_time time without time zone not null,
+  end_time time without time zone not null,
+  workers_needed integer not null default 1 check (workers_needed between 1 and 50),
+  notes text check (char_length(notes) <= 2000),
+  status text not null default 'open'
+    check (status in ('open', 'staffed', 'in_progress', 'completed', 'cancelled')),
+  created_by uuid not null default auth.uid()
+    references public.profiles (id) on delete restrict,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+
+  -- Equal times are rejected. An earlier end time means overnight (the app handles that).
+  constraint jobs_end_not_equal_start check (start_time <> end_time)
+);
+
+-- The job list sorts by date, then start time
+create index jobs_date_start_time_idx on public.jobs (date, start_time);
+
+alter table public.jobs enable row level security;
+
+-- Office roles (Dispatcher, Admin) can read every job.
+-- (F7 adds a policy so workers can read jobs they're assigned to.)
+create policy "Office can read jobs"
+  on public.jobs for select
+  to authenticated
+  using (public.is_office());
+
+-- Office roles can create jobs, and created_by must be themselves.
+create policy "Office can create jobs"
+  on public.jobs for insert
+  to authenticated
+  with check (public.is_office() and created_by = (select auth.uid()));
+
+-- Office roles can edit jobs.
+-- (The status rules come later as a trigger.)
+create policy "Office can edit jobs"
+  on public.jobs for update
+  to authenticated
+  using (public.is_office())
+  with check (public.is_office());
+
+-- Office roles can delete jobs.
+create policy "Office can delete jobs"
+  on public.jobs for delete
+  to authenticated
+  using (public.is_office());
