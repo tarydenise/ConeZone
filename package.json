@@ -25,6 +25,7 @@
   "homepage": "https://github.com/tarydenise/ConeZone#readme",
   "dependencies": {
     "@astrojs/svelte": "^9.1.4",
+    "@supabase/supabase-js": "^2.119.0",
     "astro": "^7.4.10",
     "svelte": "^5.57.3",
     "typescript": "^6.0.3"

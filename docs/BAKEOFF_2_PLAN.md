@@ -112,8 +112,8 @@ docs/              spec, plans, this file
 
 **Days 1 to 2: F1 Auth**
 
-- [ ] Create the profiles table (name, role, active) with new users defaulting to Field Worker
-- [ ] Add the Supabase client
+- [X] Create the profiles table (name, role, active) with new users defaulting to Field Worker
+- [X] Add the Supabase client
 - [ ] Build Sign Up and Log In islands with validation errors
 - [ ] Add log out
 - [ ] Send logged-out visitors to Login
@@ -175,6 +175,7 @@ docs/              spec, plans, this file
 | ----- | -------------------------------------------------------------- | ----- |
 | 11/10 | Update agents.md and set up github copilot                     | 3     |
 | 11/10 | Create Astro and Supabase projects; Add setup steps to README. | 1     |
+| 11/10 | Add profiles table and Supabase Client                         | .15   |
 
 **Numbers for the evaluation form:** Lighthouse performance metrics, total JavaScript, time to first byte, initial CSS, hot reload time, dev dependency count, and my 1 to 5 ratings.
 
