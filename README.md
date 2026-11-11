@@ -44,7 +44,6 @@ Permissions are enforced in the interface and on the server.
    npm run dev
 5. Open http://localhost:4321.
 
-
 ### Database setup (Supabase)
 
 1. In Supabase, go to Authentication > Sign In / Providers > Email. Turn off **Confirm email** and set the minimum password length to 8.
@@ -59,6 +58,8 @@ Permissions are enforced in the interface and on the server.
 | Dispatcher   | dispatcher@conezone.test |
 | Supervisor   | supervisor@conezone.test |
 | Field Worker | worker@conezone.test     |
+| Field Worker | worker2@conezone.test    |
+| Field Worker | worker3@conezone.test    |
 
 ### Tests
 

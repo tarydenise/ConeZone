@@ -152,8 +152,8 @@ docs/              spec, plans, this file
 
 **Days 9 to 10: F7 Assignments and My Jobs**
 
-- [ ] Create the assignments table and policies
-- [ ] Database functions to assign and remove workers and update Open/Staffed in one step
+- [X] Create the assignments table and policies
+- [X] Database functions to assign and remove workers and update Open/Staffed in one step
 - [ ] Crew list and Assign dialog on the job detail page
 - [ ] My Jobs page for Field Worker and Supervisor (only their jobs)
 - [ ] Show not found for jobs a worker is not assigned to
@@ -181,6 +181,7 @@ docs/              spec, plans, this file
 | 11/10 | Add test users, validation tets, and finish F1                 | 1     |
 | 11/10 | Add role helpers, permission, and access denied view           | 1     |
 | 11/10 | Add app shell, navigation, and shared states                   | 1     |
+| 11/11 | F6 By Hand                                                     | 4     |
 
 **Numbers for the evaluation form:** Lighthouse performance metrics, total JavaScript, time to first byte, initial CSS, hot reload time, dev dependency count, and my 1 to 5 ratings.
 
@@ -193,6 +194,19 @@ docs/              spec, plans, this file
 - How this compared with SvelteKit in Bakeoff 1:
 
 **AI log (add a line per task):** task, what I asked, what worked, what I fixed.
+
+**F6 with Copilot (Framework Student agent):**
+
+| Step           | What I asked                                                  | What I learned                                                                                                                                                                                                                                                                       | What I fixed                                                                            |
+| -------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| Jobs table     | What to think about before writing the table                  | Copilot asked about design decisions first (time zones, constraints, status, created_by, indexes). With a static site the database is the only real enforcement. `btrim` blocks titles of only spaces. A column default isn't a guard, so the insert policy must check created_by. |                                                                                         |
+| Time helper    | How to handle overnight jobs and month rollover               | `new Date("YYYY-MM-DD")` is read as UTC and can show the wrong day. `setDate` handles month rollover. Passing `now` in makes the function testable.                                                                                                                            | Typos (`hours`/`hour`, `date`/`Date`) and an auto-added `astro:schema` import |
+| Job list       | Where data loads in a static page; loading/error/empty states | The `.astro` frontmatter runs at build time, so data has to load in the island. One state variable can drive the whole page.                                                                                                                                                       | `state = error` (variable) vs `state = 'error'` (text)                              |
+| New job form   | Reusable form, validation, saving                             | Functions can't be passed from an `.astro` file to an island, so a small wrapper island passes `onSave`. Keep validation in its own file so it's testable.                                                                                                                       |                                                                                         |
+| Job detail     | Loading one job by id                                         | `.maybeSingle()` returns null for no row, so a missing job and a forbidden job both look like "Not found." Showing notes as text (not `@html`) keeps them safe.                                                                                                                  |                                                                                         |
+| Edit job       | Reusing the form; protecting final jobs                       | Wait for the job to load before showing the form. A trigger fits data rules better than a policy.                                                                                                                                                                                    |                                                                                         |
+| Status changes | Where transition rules belong                                 | Copilot spotted that my F6 plan allows Supervisors but my bakeoff scope doesn't. RLS controls rows, not columns, so column privileges block direct status edits. A `security definer` function with `PT403`/`PT409` codes.                                                     |                                                                                         |
+| Delete         | Deleting safely                                               | A plain delete with RLS is enough. `on delete cascade` removes related rows together.                                                                                                                                                                                              | Copilot assumed uuid ids; mine are numbers (bigint)                                     |
 
 ## 10. Demo Script (Definition of Done)
 
