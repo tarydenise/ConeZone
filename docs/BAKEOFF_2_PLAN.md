@@ -146,7 +146,7 @@ docs/              spec, plans, this file
 - [X] New job and Edit job forms with validation (New is done; Edit is still to come)
 - [X] Job detail page
 - [X] Status changes with the transition rules (Cancel, In Progress, Completed)
-- [ ] Delete with a confirmation
+- [X] Delete with a confirmation
 - [ ] Log my Copilot questions and what I learned
 - [ ] Check F6 acceptance criteria
 
