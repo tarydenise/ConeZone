@@ -163,7 +163,7 @@ docs/              spec, plans, this file
 
 - [X] Run the demo script (Section 10) and fix bugs
 - [X] Complete the README (description, setup, known issues)
-- [ ] Deploy to a static host and get the live demo URL
+- [X] Deploy to a static host and get the live demo URL
 - [ ] Collect the evaluation form numbers (Section 9)
 - [ ] Fill in the evaluation form and reflection
 - [ ] Final commit, push, and submit

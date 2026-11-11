@@ -16,6 +16,8 @@ This branch (`bakeoff-2`) is a prototype built with a **static rendering archite
 
 See the full specification in [docs/SPEC.md](docs/SPEC.md) (add a copy or link to the spec doc here).
 
+**Live demo:** [https://conezone-bakeoff2.netlify.app](https://conezone-bakeoff2.netlify.app)
+
 ## User Roles and Permissions
 
 Permissions are enforced in the interface and on the server.
