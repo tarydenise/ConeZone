@@ -3,28 +3,38 @@
   import { supabase } from '../lib/supabase.js';
   import { requireUser } from '../lib/auth.js';
   import { can } from '../lib/permissions.js';
-  import { STATUS_LABELS, isFinal } from '../lib/jobStatus.js';
+  import { STATUS_LABELS, isFinal, allowedStatusChanges } from '../lib/jobStatus.js';
   import { formatDate, formatTime, isOvernight } from '../lib/time.js';
   import Loading from './Loading.svelte';
   import ErrorMessage from './ErrorMessage.svelte';
+  import ConfirmDialog from './ConfirmDialog.svelte';
 
   let state = $state('loading'); // 'loading' | 'notfound' | 'error' | 'loaded'
   let job = $state(null);
   let role = $state('');
+  let statusError = $state('');
+  let changing = $state(false);
+  let cancelDialog = $state();
 
-  // Hiding the button is only for convenience. RLS still protects edits.
-  const canEdit = $derived(job !== null && can(role, 'job.edit') && !isFinal(job.status));
+  // Hiding buttons is only for convenience. The database still enforces every rule.
   const office = $derived(can(role, 'job.view_any'));
+  const canEdit = $derived(job !== null && can(role, 'job.edit') && !isFinal(job.status));
+  const statusOptions = $derived(job && office ? allowedStatusChanges(job.status) : []);
   const backHref = $derived(office ? '/jobs' : '/my-jobs');
 
-  async function loadJob() {
-    state = 'loading';
+  const STATUS_BUTTONS = {
+    in_progress: 'Start job (In Progress)',
+    completed: 'Mark Completed'
+  };
+
+  // quiet: refresh in place without showing Loading (used after a status change)
+  async function loadJob({ quiet = false } = {}) {
+    if (!quiet) state = 'loading';
 
     const me = await requireUser();
     if (!me) return; // being sent to Login
     role = me.profile.role;
 
-    // The id must be a whole number. Anything else is simply "not found".
     const id = new URLSearchParams(location.search).get('id');
     if (!id || !/^\d+$/.test(id)) {
       state = 'notfound';
@@ -54,6 +64,26 @@
     }
   }
 
+  /** Ask the database to change the status. Returns an error message, or null if it worked. */
+  async function changeStatus(status) {
+    statusError = '';
+    changing = true;
+    const { error } = await supabase.rpc('set_job_status', { p_job_id: job.id, p_status: status });
+    changing = false;
+
+    if (error) {
+      console.error('Status update failed:', error);
+      statusError =
+        error.code === 'PT403' ? 'You do not have permission to change this job.'
+        : error.code === 'PT409' ? 'That status change is not allowed.'
+        : 'Could not update the job. Try again.';
+      return statusError;
+    }
+
+    await loadJob({ quiet: true }); // show what the database actually stored
+    return null;
+  }
+
   onMount(() => {
     loadJob();
   });
@@ -68,7 +98,7 @@
     <a href={backHref}>Back to jobs</a>
   </div>
 {:else if state === 'error'}
-  <ErrorMessage message="Could not load this job." onretry={loadJob} />
+  <ErrorMessage message="Could not load this job." onretry={() => loadJob()} />
 {:else}
   <p><a href={backHref}>&larr; {office ? 'All jobs' : 'My jobs'}</a></p>
 
@@ -99,12 +129,34 @@
       {/if}
     </dl>
 
-    {#if canEdit}
+    {#if canEdit || statusOptions.length}
       <div class="actions">
-        <a class="btn" href={`/jobs/edit?id=${job.id}`}>Edit</a>
+        {#if canEdit}
+          <a class="btn" href={`/jobs/edit?id=${job.id}`}>Edit</a>
+        {/if}
+
+        {#each statusOptions.filter((s) => s !== 'cancelled') as option (option)}
+          <button class="btn" disabled={changing} onclick={() => changeStatus(option)}>
+            {STATUS_BUTTONS[option]}
+          </button>
+        {/each}
+
+        {#if statusOptions.includes('cancelled')}
+          <button class="btn secondary" disabled={changing} onclick={() => cancelDialog.show()}>Cancel job</button>
+        {/if}
       </div>
     {/if}
+
+    {#if statusError}<p class="error" role="alert">{statusError}</p>{/if}
   </section>
+
+  <ConfirmDialog
+    bind:this={cancelDialog}
+    title="Cancel this job?"
+    message="The job stays on record marked Cancelled, but it can't be reopened."
+    confirmLabel="Cancel job"
+    onconfirm={() => changeStatus('cancelled')}
+  />
 {/if}
 
 <style>
@@ -118,6 +170,7 @@
   .notes { white-space: pre-wrap; overflow-wrap: anywhere; }
   .note { padding: 10px 12px; background: #fff1c2; border: 1.5px solid var(--ink); border-radius: 6px; max-width: 640px; }
   .actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .error { margin-top: 12px; }
   @media (min-width: 600px) {
     dl { grid-template-columns: 160px 1fr; }
     dt { margin-top: 0; }

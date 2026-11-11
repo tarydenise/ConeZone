@@ -149,3 +149,77 @@ $$;
 create trigger jobs_protect_final
   before update on public.jobs
   for each row execute function public.protect_final_jobs();
+
+-- =========================================================
+-- F6: Status rules
+-- =========================================================
+
+-- Grow the trigger into the full set of job rules.
+-- (create or replace keeps the existing trigger attached.)
+create or replace function public.protect_final_jobs()
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
+begin
+  -- 1. Final jobs can't change at all
+  if old.status in ('completed', 'cancelled') then
+    raise exception 'This job can no longer be edited' using errcode = 'PT409';
+  end if;
+
+  -- 2. Status can only move along allowed paths
+  if new.status is distinct from old.status then
+    if not (
+      (new.status = 'in_progress' and old.status in ('open', 'staffed')) or
+      (new.status = 'completed'   and old.status = 'in_progress') or
+      (new.status = 'cancelled'   and old.status in ('open', 'staffed', 'in_progress')) or
+      (new.status = 'staffed'     and old.status = 'open') or     -- automatic, F7 only
+      (new.status = 'open'        and old.status = 'staffed')       -- automatic, F7 only
+    ) then
+      raise exception 'That status change is not allowed' using errcode = 'PT409';
+    end if;
+  end if;
+
+  return new;
+end;
+$$;
+
+-- The browser may edit job details, but never status or created_by directly.
+revoke update on public.jobs from authenticated, anon;
+grant update (title, client_name, address, date, start_time, end_time, workers_needed, notes, updated_at)
+  on public.jobs to authenticated;
+
+-- New jobs always start as Open and belong to whoever created them.
+revoke insert on public.jobs from authenticated, anon;
+grant insert (title, client_name, address, date, start_time, end_time, workers_needed, notes)
+  on public.jobs to authenticated;
+
+-- The only way a person can change a job's status.
+create function public.set_job_status(p_job_id bigint, p_status text)
+returns void
+language plpgsql
+security definer set search_path = ''
+as $$
+begin
+  if not public.is_office() then
+    raise exception 'You do not have access to this action' using errcode = 'PT403';
+  end if;
+
+  -- Open and Staffed are set automatically in F7, never by hand
+  if p_status not in ('in_progress', 'completed', 'cancelled') then
+    raise exception 'That status change is not allowed' using errcode = 'PT409';
+  end if;
+
+  -- Lock the row so two people can't change it at the same moment
+  perform 1 from public.jobs where id = p_job_id for update;
+  if not found then
+    raise exception 'Not found' using errcode = 'PT404';
+  end if;
+
+  -- The trigger checks the move itself
+  update public.jobs set status = p_status, updated_at = now() where id = p_job_id;
+end;
+$$;
+
+revoke execute on function public.set_job_status(bigint, text) from public, anon;
+grant execute on function public.set_job_status(bigint, text) to authenticated;

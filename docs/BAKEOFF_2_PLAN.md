@@ -54,6 +54,7 @@ Same core features as Bakeoff 1, so the two stacks can be compared fairly.
 ### Simplified for the prototype
 
 - **F3 Admin user management:** no screen. One user per role is created in the Supabase dashboard, and their roles are set with SQL.
+- **F6:** only Dispatchers and Admins change a job's status. Without the job supervisor flag, the Supervisor status rules in F6 (FR-7, AC-7) are not included.
 - **F7:** the job supervisor flag is not included.
 
 ### Out of scope
@@ -144,7 +145,7 @@ docs/              spec, plans, this file
 - [X] Job list page (Dispatcher and Admin)
 - [X] New job and Edit job forms with validation (New is done; Edit is still to come)
 - [X] Job detail page
-- [ ] Status changes with the transition rules (Cancel, In Progress, Completed)
+- [X] Status changes with the transition rules (Cancel, In Progress, Completed)
 - [ ] Delete with a confirmation
 - [ ] Log my Copilot questions and what I learned
 - [ ] Check F6 acceptance criteria

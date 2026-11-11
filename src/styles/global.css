@@ -144,6 +144,11 @@ input:focus-visible {
     text-decoration: line-through;
 }
 
+.btn.danger {
+    background: #a40000;
+    border-color: #a40000;
+}
+
 @media (min-width: 768px) {
     .app-main {
         padding-bottom: 16px;
