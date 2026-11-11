@@ -72,7 +72,22 @@ export function toJobRow(values) {
 /** Turn a Supabase error into a message the user can act on. */
 export function friendlyJobError(error) {
   console.error('Job save failed:', error);
+  if (error.code === 'PT409') return `${error.message}.`; // rule messages written in the database
   if (error.code === '23514') return 'Some job details are invalid. Review the fields and try again.';
   if (error.code === '42501') return 'You do not have permission to do this.';
   return 'Could not save the job. Check your connection and try again.';
+}
+
+/** Turn a jobs row into values for the form ("07:00:00" -> "07:00", null -> ""). */
+export function toFormValues(job) {
+  return {
+    title: job.title,
+    client_name: job.client_name ?? '',
+    address: job.address,
+    date: job.date,
+    start_time: job.start_time.slice(0, 5),
+    end_time: job.end_time.slice(0, 5),
+    workers_needed: job.workers_needed,
+    notes: job.notes ?? ''
+  };
 }

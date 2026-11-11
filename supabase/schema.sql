@@ -129,3 +129,23 @@ create policy "Office can delete jobs"
   on public.jobs for delete
   to authenticated
   using (public.is_office());
+
+-- Final jobs (completed or cancelled) can't be changed.
+-- Milestone 7 grows this into the full status rules.
+create function public.protect_final_jobs()
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
+begin
+  if old.status in ('completed', 'cancelled') then
+    -- PT409 makes Supabase answer with HTTP 409 (conflict), matching the F6 plan
+    raise exception 'This job can no longer be edited' using errcode = 'PT409';
+  end if;
+  return new;
+end;
+$$;
+
+create trigger jobs_protect_final
+  before update on public.jobs
+  for each row execute function public.protect_final_jobs();
