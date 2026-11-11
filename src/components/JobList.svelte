@@ -148,29 +148,4 @@
         display: block;
         color: #666;
     }
-    .badge {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 700;
-        border: 1.5px solid var(--ink);
-        white-space: nowrap;
-    }
-    .badge.open {
-        background: #fff;
-    }
-    .badge.staffed {
-        background: #dff3e3;
-    }
-    .badge.in_progress {
-        background: #fff1c2;
-    }
-    .badge.completed {
-        background: #e3e3e0;
-    }
-    .badge.cancelled {
-        background: #fadada;
-        text-decoration: line-through;
-    }
 </style>

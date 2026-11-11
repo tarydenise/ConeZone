@@ -143,7 +143,7 @@ docs/              spec, plans, this file
 - [X] Write the shared time helper (overnight jobs end the next day) with Vitest tests
 - [X] Job list page (Dispatcher and Admin)
 - [ ] New job and Edit job forms with validation (New is done; Edit is still to come)
-- [ ] Job detail page
+- [X] Job detail page
 - [ ] Status changes with the transition rules (Cancel, In Progress, Completed)
 - [ ] Delete with a confirmation
 - [ ] Log my Copilot questions and what I learned
