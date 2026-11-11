@@ -140,7 +140,7 @@ docs/              spec, plans, this file
 **Days 6 to 8: F6 Jobs (built by hand)**
 
 - [X] Create the jobs table with constraints and policies
-- [ ] Write the shared time helper (overnight jobs end the next day) with Vitest tests
+- [X] Write the shared time helper (overnight jobs end the next day) with Vitest tests
 - [ ] Job list page (Dispatcher and Admin)
 - [ ] New job and Edit job forms with validation
 - [ ] Job detail page
