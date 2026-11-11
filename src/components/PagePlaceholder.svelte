@@ -2,22 +2,23 @@
   import { onMount } from 'svelte';
   import { requireAction } from '../lib/auth.js';
   import AccessDenied from './AccessDenied.svelte';
+  import Loading from './Loading.svelte';
+  import Empty from './Empty.svelte';
 
+  let { title, action, message } = $props();
   let state = $state('loading'); // 'loading' | 'allowed' | 'denied'
 
   onMount(async () => {
-    const result = await requireAction('job.create');
+    const result = await requireAction(action);
     if (result) state = result.allowed ? 'allowed' : 'denied';
   });
 </script>
 
 {#if state === 'loading'}
-  <main class="auth-card"><p>Loading...</p></main>
+  <Loading />
 {:else if state === 'denied'}
   <AccessDenied />
 {:else}
-  <main class="auth-card">
-    <h1>New job (placeholder)</h1>
-    <p>F6 builds this page.</p>
-  </main>
+  <h1>{title}</h1>
+  <Empty {message} />
 {/if}

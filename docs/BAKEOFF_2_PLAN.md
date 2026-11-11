@@ -129,11 +129,11 @@ docs/              spec, plans, this file
 
 **Days 4 to 5: F4 App shell**
 
-- [ ] Build the shared layout: header with name, role, and Log out
-- [ ] Role-based navigation (top bar on desktop, bottom tabs for workers on phones, menu button for Dispatcher and Admin on phones)
-- [ ] Build shared Loading, Empty, and Error displays, and the not-found page
-- [ ] Check layouts at 375 px and 1280 px
-- [ ] **Week 1 checkpoint:** log in as each role and see the correct navigation. Commit and push.
+- [X] Build the shared layout: header with name, role, and Log out
+- [X] Role-based navigation (top bar on desktop, bottom tabs for workers on phones, menu button for Dispatcher and Admin on phones)
+- [X] Build shared Loading, Empty, and Error displays, and the not-found page
+- [X] Check layouts at 375 px and 1280 px
+- [X] **Week 1 checkpoint:** log in as each role and see the correct navigation. Commit and push.
 
 ### Week 2: Core Features
 
@@ -179,6 +179,7 @@ docs/              spec, plans, this file
 | 11/10 | Add sign up, log in, and log out                               | 1     |
 | 11/10 | Add test users, validation tets, and finish F1                 | 1     |
 | 11/10 | Add role helpers, permission, and access denied view           | 1     |
+| 11/10 | Add app shell, navigation, and shared states                   | 1     |
 
 **Numbers for the evaluation form:** Lighthouse performance metrics, total JavaScript, time to first byte, initial CSS, hot reload time, dev dependency count, and my 1 to 5 ratings.
 

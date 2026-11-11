@@ -1,0 +1,8 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+import PagePlaceholder from '../../components/PagePlaceholder.svelte';
+---
+
+<AppLayout title="Jobs | ConeZone">
+  <PagePlaceholder client:load title="Jobs" action="job.view_any" message="No jobs yet. The job list is built in F6." />
+</AppLayout>

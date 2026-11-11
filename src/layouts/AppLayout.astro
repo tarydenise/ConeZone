@@ -1,0 +1,13 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AppHeader from '../components/AppHeader.svelte';
+const { title = 'ConeZone' } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <a class="skip" href="#main">Skip to content</a>
+  <AppHeader client:load />
+  <main id="main" class="app-main">
+    <slot />
+  </main>
+</BaseLayout>

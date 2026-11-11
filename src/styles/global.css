@@ -77,3 +77,44 @@ input:focus-visible {
     font-size: 13px;
     margin: 0;
 }
+
+.btn.secondary {
+    background: #fff;
+    color: var(--ink);
+    border-color: var(--line);
+}
+
+.card {
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.skip {
+    position: absolute;
+    left: -9999px;
+    top: 8px;
+    z-index: 50;
+    background: #fff;
+    padding: 12px 16px;
+    border: 2px solid var(--ink);
+}
+
+.skip:focus {
+    left: 8px;
+}
+
+/* Room at the bottom on phones for the worker tab bar */
+.app-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 16px 88px;
+    box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .app-main {
+        padding-bottom: 16px;
+    }
+}

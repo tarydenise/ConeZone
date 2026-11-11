@@ -7,12 +7,20 @@ export function goToLogin() {
   location.href = `/login?redirectTo=${encodeURIComponent(here)}`;
 }
 
+// Shared by every island on the page, so the profile loads once.
+let currentUser;
+
 /**
  * For protected pages: returns { user, profile } for the logged-in user,
  * or sends them to Login. This is a convenience check in the browser.
  * The real protection is Row Level Security in the database.
  */
-export async function requireUser() {
+export function requireUser() {
+  currentUser ??= loadUser();
+  return currentUser;
+}
+
+async function loadUser() {
   const { data } = await supabase.auth.getSession();
   const session = data.session;
   if (!session) {
@@ -36,11 +44,6 @@ export async function requireUser() {
   return { user: session.user, profile };
 }
 
-export async function logOut() {
-  await supabase.auth.signOut();
-  location.href = '/login';
-}
-
 /**
  * For pages limited to certain roles: returns { user, profile, allowed },
  * or sends logged-out visitors to Login.
@@ -49,4 +52,9 @@ export async function requireAction(action) {
   const result = await requireUser();
   if (!result) return null;
   return { ...result, allowed: can(result.profile.role, action) };
+}
+
+export async function logOut() {
+  await supabase.auth.signOut();
+  location.href = '/login';
 }
