@@ -32,7 +32,17 @@ Permissions are enforced in the interface and on the server.
 
 ## Setup and Installation
 
-_To be completed once the technology stack is chosen after the Bakeoffs._
+**You need:** Node.js 22 or newer and a free Supabase project.
+
+1. Clone the repo and switch to the `bakeoff-2` branch.
+2. Install packages:
+
+   npm install
+3. Copy `.env.example` to `.env` and fill in your Supabase **Project URL** and **Publishable key** (Supabase: Project Settings, then API Keys).
+4. Start the app:
+
+   npm run dev
+5. Open http://localhost:4321.
 
 ## API Documentation
 

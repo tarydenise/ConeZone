@@ -101,12 +101,12 @@ docs/              spec, plans, this file
 
 ### Day 0: Setup
 
-- [ ] Create the Astro project in the repo, add the Svelte integration, and run it locally
-- [ ] Create the Supabase project; add its URL and public key to `.env`; update `.env.example`
-- [ ] Update `AGENTS.md` for Astro and Supabase
-- [ ] Set up GitHub Copilot in VS Code and add `.github/agents/FrameworkStudent.agent.md`
-- [ ] Add setup steps to the README
-- [ ] Commit and push
+- [X] Create the Astro project in the repo, add the Svelte integration, and run it locally
+- [X] Create the Supabase project; add its URL and public key to `.env`; update `.env.example`
+- [X] Update `AGENTS.md` for Astro and Supabase
+- [X] Set up GitHub Copilot in VS Code and add `.github/agents/FrameworkStudent.agent.md`
+- [X] Add setup steps to the README
+- [X] Commit and push
 
 ### Week 1: Foundations
 
@@ -171,9 +171,10 @@ docs/              spec, plans, this file
 
 **Time log** (fill in as I go; this is my velocity number):
 
-| Date | Task | Hours |
-| ---- | ---- | ----- |
-|      |      |       |
+| Date  | Task                                                           | Hours |
+| ----- | -------------------------------------------------------------- | ----- |
+| 11/10 | Update agents.md and set up github copilot                     | 3     |
+| 11/10 | Create Astro and Supabase projects; Add setup steps to README. | 1     |
 
 **Numbers for the evaluation form:** Lighthouse performance metrics, total JavaScript, time to first byte, initial CSS, hot reload time, dev dependency count, and my 1 to 5 ratings.
 

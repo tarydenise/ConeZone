@@ -1,0 +1,32 @@
+{
+  "name": "conezone",
+  "version": "1.0.0",
+  "description": "A job board and crew communication web app for a traffic control company. Dispatchers post and staff jobs, supervisors run the site, and field workers see their jobs, check in, and message about them.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarydenise/ConeZone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/tarydenise/ConeZone/issues"
+  },
+  "homepage": "https://github.com/tarydenise/ConeZone#readme",
+  "dependencies": {
+    "@astrojs/svelte": "^9.1.4",
+    "astro": "^7.4.10",
+    "svelte": "^5.57.3",
+    "typescript": "^6.0.3"
+  }
+}

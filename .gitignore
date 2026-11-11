@@ -8,9 +8,13 @@ __pycache__/
 # Secrets and local config: never commit these
 .env
 .env.*
+!.env.example
 *.pem
 
 # Editor and OS files
 .DS_Store
 Thumbs.db
 .idea/
+
+# Stack
+.astro/
