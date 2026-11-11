@@ -44,6 +44,26 @@ Permissions are enforced in the interface and on the server.
    npm run dev
 5. Open http://localhost:4321.
 
+
+### Database setup (Supabase)
+
+1. In Supabase, go to Authentication > Sign In / Providers > Email. Turn off **Confirm email** and set the minimum password length to 8.
+2. Open the SQL Editor and run `supabase/schema.sql`.
+3. Create the test users in Authentication > Users > Add user (password `Password123!`, Auto Confirm on), then run `supabase/seed.sql`.
+
+### Test users (development only)
+
+| Role         | Email                    |
+| ------------ | ------------------------ |
+| Admin        | admin@conezone.test      |
+| Dispatcher   | dispatcher@conezone.test |
+| Supervisor   | supervisor@conezone.test |
+| Field Worker | worker@conezone.test     |
+
+### Tests
+
+    npm test
+
 ## API Documentation
 
 _To be completed during development. Start from the endpoint list in the specification (Section 7)._

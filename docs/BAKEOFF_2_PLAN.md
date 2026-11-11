@@ -114,11 +114,11 @@ docs/              spec, plans, this file
 
 - [X] Create the profiles table (name, role, active) with new users defaulting to Field Worker
 - [X] Add the Supabase client
-- [ ] Build Sign Up and Log In islands with validation errors
-- [ ] Add log out
-- [ ] Send logged-out visitors to Login
-- [ ] Create one user per role (Admin, Dispatcher, Supervisor, Field Worker)
-- [ ] Check F1 acceptance criteria by hand; write Vitest tests for the password and email rules
+- [X] Build Sign Up and Log In islands with validation errors
+- [X] Add log out
+- [X] Send logged-out visitors to Login
+- [X] Create one user per role (Admin, Dispatcher, Supervisor, Field Worker)
+- [X] Check F1 acceptance criteria by hand; write Vitest tests for the password and email rules
 
 **Day 3: F2 Role enforcement**
 
@@ -175,7 +175,9 @@ docs/              spec, plans, this file
 | ----- | -------------------------------------------------------------- | ----- |
 | 11/10 | Update agents.md and set up github copilot                     | 3     |
 | 11/10 | Create Astro and Supabase projects; Add setup steps to README. | 1     |
-| 11/10 | Add profiles table and Supabase Client                         | .15   |
+| 11/10 | Add profiles table and Supabase Client                         | 1     |
+| 11/10 | Add sign up, log in, and log out                               | 1     |
+| 11/10 | Add test users, validation tets, and finish F1                 | 1     |
 
 **Numbers for the evaluation form:** Lighthouse performance metrics, total JavaScript, time to first byte, initial CSS, hot reload time, dev dependency count, and my 1 to 5 ratings.
 
