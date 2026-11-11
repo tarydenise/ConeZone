@@ -148,7 +148,7 @@ docs/              spec, plans, this file
 - [X] Status changes with the transition rules (Cancel, In Progress, Completed)
 - [X] Delete with a confirmation
 - [ ] Log my Copilot questions and what I learned
-- [ ] Check F6 acceptance criteria
+- [X] Check F6 acceptance criteria - AC-7 not in scope (no job supervisor flag); AC-10 crew removal checked in F7
 
 **Days 9 to 10: F7 Assignments and My Jobs**
 
