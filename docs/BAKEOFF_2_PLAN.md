@@ -155,9 +155,9 @@ docs/              spec, plans, this file
 - [X] Create the assignments table and policies
 - [X] Database functions to assign and remove workers and update Open/Staffed in one step
 - [X] Crew list and Assign dialog on the job detail page
-- [ ] My Jobs page for Field Worker and Supervisor (only their jobs)
-- [ ] Show not found for jobs a worker is not assigned to
-- [ ] Check the main F7 acceptance criteria
+- [X] My Jobs page for Field Worker and Supervisor (only their jobs)
+- [X] Show not found for jobs a worker is not assigned to
+- [X] Check the main F7 acceptance criteria - AC-6, AC-7, and AC-16 (job supervisor flag) not in scope; AC-15 covered by unit tests.
 
 **Days 11 to 14: Finish**
 

@@ -1,8 +1,8 @@
 ---
 import AppLayout from '../layouts/AppLayout.astro';
-import PagePlaceholder from '../components/PagePlaceholder.svelte';
+import MyJobs from '../components/MyJobs.svelte';
 ---
 
 <AppLayout title="My Jobs | ConeZone">
-  <PagePlaceholder client:load title="My Jobs" action="job.view_own" message="No jobs assigned to you yet." />
+  <MyJobs client:load />
 </AppLayout>
