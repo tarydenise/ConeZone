@@ -122,10 +122,10 @@ docs/              spec, plans, this file
 
 **Day 3: F2 Role enforcement**
 
-- [ ] Turn on Row Level Security for every table, with policies per role
-- [ ] Add a permissions file for the interface (which controls each role sees)
-- [ ] Build the access denied view
-- [ ] Check F2 acceptance criteria, including a Field Worker trying to create a job by calling Supabase directly
+- [X] Turn on Row Level Security for every table, with policies per role (profiles done; jobs and assignments add theirs in F6 and F7)
+- [X] Add a permissions file for the interface (which controls each role sees)
+- [X] Build the access denied view
+- [X] Check F2 acceptance criteria, including a Field Worker trying to create a job by calling Supabase directly
 
 **Days 4 to 5: F4 App shell**
 
@@ -178,6 +178,7 @@ docs/              spec, plans, this file
 | 11/10 | Add profiles table and Supabase Client                         | 1     |
 | 11/10 | Add sign up, log in, and log out                               | 1     |
 | 11/10 | Add test users, validation tets, and finish F1                 | 1     |
+| 11/10 | Add role helpers, permission, and access denied view           | 1     |
 
 **Numbers for the evaluation form:** Lighthouse performance metrics, total JavaScript, time to first byte, initial CSS, hot reload time, dev dependency count, and my 1 to 5 ratings.
 

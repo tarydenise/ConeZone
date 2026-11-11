@@ -40,3 +40,35 @@ $$;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+-- =========================================================
+-- F2: Role helpers (every later policy uses these)
+-- =========================================================
+
+-- The logged-in user's role, or null if they're logged out or deactivated.
+-- Policies use this, so a deactivated user is treated as logged out everywhere.
+create function public.my_role()
+returns text
+language sql
+stable
+security definer set search_path = ''
+as $$
+  select role from public.profiles
+  where id = (select auth.uid()) and is_active
+$$;
+
+-- True for Dispatchers and Admins (the "office" roles).
+create function public.is_office()
+returns boolean
+language sql
+stable
+security definer set search_path = ''
+as $$
+  select coalesce(public.my_role() in ('admin', 'dispatcher'), false)
+$$;
+
+-- Dispatchers and Admins can see everyone (needed to assign crews in F7).
+create policy "Office can read all profiles"
+  on public.profiles for select
+  to authenticated
+  using (public.is_office());

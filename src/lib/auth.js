@@ -1,4 +1,5 @@
 import { supabase } from './supabase.js';
+import { can } from './permissions.js';
 
 /** Send the visitor to Login, remembering where they were going. */
 export function goToLogin() {
@@ -38,4 +39,14 @@ export async function requireUser() {
 export async function logOut() {
   await supabase.auth.signOut();
   location.href = '/login';
+}
+
+/**
+ * For pages limited to certain roles: returns { user, profile, allowed },
+ * or sends logged-out visitors to Login.
+ */
+export async function requireAction(action) {
+  const result = await requireUser();
+  if (!result) return null;
+  return { ...result, allowed: can(result.profile.role, action) };
 }
