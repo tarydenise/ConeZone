@@ -26,7 +26,7 @@
             const { data, error } = await supabase
                 .from("jobs")
                 .select(
-                    "id, title, client_name, address, date, start_time, end_time, workers_needed, status",
+                    "id, title, client_name, address, date, start_time, end_time, workers_needed, status, assignments(count)",
                 )
                 .order("date", { ascending: true })
                 .order("start_time", { ascending: true });
@@ -68,7 +68,7 @@
                 <thead>
                     <tr
                         ><th>Date</th><th>Time</th><th>Job</th><th>Address</th
-                        ><th>Workers</th><th>Status</th></tr
+                        ><th>Staffed</th><th>Status</th></tr
                     >
                 </thead>
                 <tbody>
@@ -93,7 +93,7 @@
                                     >{/if}
                             </td>
                             <td>{job.address}</td>
-                            <td>{job.workers_needed}</td>
+                            <td>{job.assignments[0]?.count ?? 0} / {job.workers_needed}</td>
                             <td
                                 ><span class="badge {job.status}"
                                     >{STATUS_LABELS[job.status]}</span

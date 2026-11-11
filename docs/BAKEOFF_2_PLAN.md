@@ -154,7 +154,7 @@ docs/              spec, plans, this file
 
 - [X] Create the assignments table and policies
 - [X] Database functions to assign and remove workers and update Open/Staffed in one step
-- [ ] Crew list and Assign dialog on the job detail page
+- [X] Crew list and Assign dialog on the job detail page
 - [ ] My Jobs page for Field Worker and Supervisor (only their jobs)
 - [ ] Show not found for jobs a worker is not assigned to
 - [ ] Check the main F7 acceptance criteria
